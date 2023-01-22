@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
 import 'package:tashil_food_app/data/category/model/category_model.dart';
 import 'package:tashil_food_app/data/meals/model/meal_model.dart';
 import 'package:tashil_food_app/core/helper/handing_data_controller.dart';
@@ -14,18 +15,19 @@ class HomeController extends GetxController {
   var homeMealsList = <MealModel>[].obs;
 
   var homeOfferList = <OfferModel>[].obs;
-
+  var storage = SharedPref.instance;
   late StatusRequest statusRequestCategory;
   late StatusRequest statusRequestMeals;
   late StatusRequest statusRequestOffer;
 
   @override
   void onInit() async {
-    viewStaticHomeOffer();
+    viewHomeOffer();
 
     // firebase
     viewHomeCategory();
     getDataMealsHome();
+    super.onInit();
     // addProduct();
   }
 
@@ -38,6 +40,8 @@ class HomeController extends GetxController {
         final dataList =
             (response as List).map((e) => CategoryModel.fromJson(e)).toList();
         homeCategoryList.addAll(dataList);
+        final String encodedData = CategoryModel.encode(homeCategoryList);
+        await storage.setString('homeCategoryList', encodedData);
       } else {
         statusRequestCategory = StatusRequest.failure;
       }
@@ -72,7 +76,6 @@ class HomeController extends GetxController {
     statusRequestMeals = handlingData(response);
     if (StatusRequest.success == statusRequestMeals) {
       if (response != null) {
-        print(response);
         final dataList =
             (response as List).map((e) => MealModel.fromJson(e)).toList();
         homeMealsList.addAll(dataList);
@@ -84,17 +87,14 @@ class HomeController extends GetxController {
     update();
   }
 
-  Future<void> viewStaticHomeOffer() async {
+  Future<void> viewHomeOffer() async {
     statusRequestOffer = StatusRequest.loading;
-    var response = await HomeServices.viewStaticHomeOffers();
+    var response = await HomeServices.viewHomeOffers();
     statusRequestOffer = handlingData(response);
-    // print("=============================== Controller $response ");
-
     if (StatusRequest.success == statusRequestOffer) {
-      if (response['status'] == 200) {
-        final dataList = (response['data']['data'] as List)
-            .map((e) => OfferModel.fromJson(e))
-            .toList();
+      if (response != null) {
+        final dataList =
+            (response as List).map((e) => OfferModel.fromJson(e)).toList();
         homeOfferList.addAll(dataList);
       } else {
         statusRequestOffer = StatusRequest.failure;

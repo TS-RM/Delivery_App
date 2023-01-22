@@ -27,7 +27,8 @@ class HomeServices {
   }
 
   static viewHomeMeals() async {
-    var response = await CrudFirebase().readDataAll(tableName: 'Meals');
+    var response = await CrudFirebase().readDataLimitAndOrderBy(
+        tableName: 'Meals', orderByField: 'addedDate', limit: 5);
     return response.fold((l) => l, (r) => r);
   }
 
@@ -36,56 +37,8 @@ class HomeServices {
     return response.fold((l) => l, (r) => r);
   }
 
-  static viewStaticHomeOffers() async {
-    Either<StatusRequest, Map<dynamic, dynamic>> data = right({
-      'status': 200,
-      'data': {
-        'data': [
-          {
-            'id': 1,
-            'title': 'دجاج مشوي علي الفحم',
-            'productId': 1,
-            'discountPercent': 100,
-            'priceAfterDiscount': 200,
-            'deadline': '2023-01-02 20:18:04Z',
-            'meal': {
-              'id': 'ghghghhg',
-              'name': 'دجاج مشوي علي الفحم',
-              'image': 'assets/images/onboarding/onboarding1.png',
-              'rating': 4.0,
-              'price': 200,
-              'addedDate': Timestamp(1672647166, 935000000),
-              'calories': 2,
-              'description':
-                  'simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also',
-              'status': 1,
-              'whoAdded': ''
-            },
-          },
-          {
-            'id': 2,
-            'title': 'كبسة لحم',
-            'productId': 2,
-            'discountPercent': 50,
-            'priceAfterDiscount': 300,
-            'deadline': '2022-12-20 11:37:04Z',
-            'meal': {
-              'id': 'cxxzc',
-              'name': 'كبسة لحم',
-              'image': 'assets/images/onboarding/onboarding2.png',
-              'rating': 4.0,
-              'price': 300,
-              'addedDate': Timestamp(1672647166, 935000000),
-              'calories': 2,
-              'description':
-                  'simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also',
-              'status': 1,
-              'whoAdded': ''
-            },
-          },
-        ],
-      },
-    });
-    return data.fold((l) => l, (r) => r);
+  static viewHomeOffers() async {
+    var response = await CrudFirebase().readDataAll(tableName: 'Offer');
+    return response.fold((l) => l, (r) => r);
   }
 }

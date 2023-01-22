@@ -1,14 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/enums/loading_state.dart';
 import 'package:tashil_food_app/constants/enums/loading_types.dart';
-import 'package:tashil_food_app/data/model/home_product/home_product_data.dart';
 import 'package:tashil_food_app/data/meals/model/meal_model.dart';
-import 'package:tashil_food_app/data/services/food_services.dart';
 import 'package:tashil_food_app/constants/enums/status_request.dart';
 import 'package:tashil_food_app/data/home/service/home_services.dart';
+import 'package:tashil_food_app/data/meals/service/meal_service.dart';
 
 import '../../../data/model/all_categories.dart';
 
@@ -19,13 +16,13 @@ class MealsController extends GetxController {
 
   final isLoading = true.obs;
   final scrollController = ScrollController();
-  int _pageNo = 1;
+  int _limit = 6;
   final loadingState = LoadingState(loadingType: LoadingType.stable).obs;
   late StatusRequest statusRequestFood;
   var currentSelected = 0.obs;
   var currentSelectedRating = 0.obs;
   var currentSelectedSlider = 0.0.obs;
-  Rx<RangeValues> values = RangeValues(0, 100.00).obs;
+  Rx<RangeValues> values = const RangeValues(0, 100.00).obs;
   RxString startLabel = 0.toString().obs;
   RxString endLabel = 100.00.toString().obs;
 
@@ -39,6 +36,7 @@ class MealsController extends GetxController {
 
   @override
   void onInit() async {
+    super.onInit();
     // await viewAllFood();
     await viewAllMeals();
     // await viewCategories();
@@ -50,18 +48,21 @@ class MealsController extends GetxController {
       print('donw');
       loadingState.value = LoadingState(loadingType: LoadingType.loading);
       try {
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
 
-        // final listOfData = await FoodApi.viewAllFoods(++_pageNo);
+        final listOfData = await MealService.viewAllMeals(++_limit);
 
-        // if (allFoodsList.isEmpty) {
-        //   loadingState.value = LoadingState(
-        //       loadingType: LoadingType.completed,
-        //       completed: "there is no data");
-        // } else {
-        //   allFoodsList.addAll(listOfData);
-        //   loadingState.value = LoadingState(loadingType: LoadingType.loaded);
-        // }
+        if (listOfData.isEmpty) {
+          loadingState.value = LoadingState(
+              loadingType: LoadingType.completed,
+              completed: "there is no data");
+        } else {
+          final dataList =
+              (listOfData as List).map((e) => MealModel.fromJson(e)).toList();
+          allMeals.clear();
+          allMeals.addAll(dataList);
+          loadingState.value = LoadingState(loadingType: LoadingType.loaded);
+        }
       } catch (err) {
         loadingState.value =
             LoadingState(loadingType: LoadingType.error, error: err.toString());
@@ -78,7 +79,7 @@ class MealsController extends GetxController {
   }
 
   Future<void> viewAllMeals() async {
-    var response = await HomeServices.viewHomeMeals();
+    var response = await MealService.viewAllMeals(_limit);
     if (response != null) {
       final dataList =
           (response as List).map((e) => MealModel.fromJson(e)).toList();

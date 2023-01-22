@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tashil_food_app/data/offer/model/model_offer.dart';
@@ -24,7 +25,16 @@ class OnBoardingItem extends StatelessWidget {
               image: DecorationImage(
                 colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.3), BlendMode.darken),
-                image: AssetImage(offerModel.dataMeals!.image!),
+                image: CachedNetworkImageProvider(
+                  offerModel.image.toString(),
+
+                  // placeholder: (context, url) => CircularProgressIndicator(),
+                  // errorWidget: (context, url, error) => Icon(
+                  //   Icons.photo_rounded,
+                  //   color: Colors.grey.shade700,
+                  //   size: 100,
+                  // ),
+                ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -50,7 +60,7 @@ class OnBoardingItem extends StatelessWidget {
               textAlign: TextAlign.center),
         ),
         OnboardingTime(
-          deadline: offerModel.deadline!,
+          deadline: offerModel.deadline.toString(),
         ),
       ],
     );

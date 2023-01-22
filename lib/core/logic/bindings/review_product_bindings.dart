@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 
-import '../controllers/review_product_controllers.dart';
+import '../controllers/review_rating_meal_controllers.dart';
 
-class RreviewProductBinding extends Bindings {
+class PreviewRatingMealBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(PreviewProductController());
+    Get.put(PreviewRatingMealController());
   }
 }

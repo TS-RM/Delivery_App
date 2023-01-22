@@ -66,12 +66,16 @@ class ThemesApp {
             color: Color.fromRGBO(144, 152, 177, 1),
           ),
         ),
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle:
-              SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+        appBarTheme: AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
+            systemNavigationBarColor: Colors.white,
+            statusBarColor: Colors.white.withOpacity(.8),
+          ),
           backgroundColor: Colors.transparent,
           elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black45),
+          iconTheme: const IconThemeData(color: Colors.black45),
           centerTitle: true,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -122,14 +126,19 @@ class ThemesApp {
             color: Color.fromRGBO(144, 152, 177, 1),
           ),
         ),
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle:
-              SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+        appBarTheme: AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.light,
+            // statusBarBrightness: Brightness.,
+
+            systemNavigationBarColor: const Color(0xFF1F1F30),
+            statusBarColor: const Color(0xFF18172B).withOpacity(.8),
+          ),
           backgroundColor: Colors.transparent,
           elevation: 0,
-          toolbarTextStyle: TextStyle(color: Colors.white),
+          toolbarTextStyle: const TextStyle(color: Colors.white),
           centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.white),
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
         cardColor: const Color(0xFF27273c),
         elevatedButtonTheme: ElevatedButtonThemeData(

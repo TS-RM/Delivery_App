@@ -38,6 +38,7 @@ import 'package:tashil_food_app/presentation/screens/onboarding_screen.dart';
 import 'package:tashil_food_app/presentation/screens/product_details_scree.dart';
 import 'package:tashil_food_app/presentation/screens/meals_in_category_screen.dart';
 import 'package:tashil_food_app/presentation/screens/review_rating/all_review_screen.dart';
+import 'package:tashil_food_app/presentation/screens/review_rating/edit_review_screen.dart';
 import 'package:tashil_food_app/presentation/screens/review_rating/write_review_screen.dart';
 import 'package:tashil_food_app/presentation/screens/search/filter_screen.dart';
 import 'package:tashil_food_app/presentation/screens/search/search_screen.dart';
@@ -69,6 +70,9 @@ class AppRoutes {
     GetPage(
       name: ScreenName.signUpScreen,
       page: () => SignUpScreen(),
+      bindings: [
+        AuthBindings(),
+      ],
     ),
     GetPage(
         name: ScreenName.onBoardingScreen,
@@ -177,11 +181,15 @@ class AppRoutes {
     GetPage(
         name: ScreenName.allReviewScreen,
         page: () => AllReviewScreen(),
-        binding: RreviewProductBinding()),
+        binding: PreviewRatingMealBinding()),
 
     GetPage(
       name: ScreenName.writeReviewScreen,
       page: () => WriteReviewScreen(),
+    ),
+    GetPage(
+      name: ScreenName.editReviewScreen,
+      page: () => EditReviewScreen(),
     ),
     GetPage(
         name: ScreenName.allFoodScreen,

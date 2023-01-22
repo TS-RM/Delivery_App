@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
-import 'package:tashil_food_app/data/auth/service/hive_auth_controllers.dart';
+import 'package:tashil_food_app/data/auth/service/hive_auth.dart';
 import 'package:tashil_food_app/data/auth/model/user_model.dart';
 import 'package:tashil_food_app/data/firebase/auth_firebase.dart';
 import 'package:tashil_food_app/data/firebase/firestore_auth.dart';
@@ -86,7 +86,7 @@ class AuthController extends GetxController {
         final userID = user.user!.uid;
         fireStoreUser.addUserToFireStore(usersModel);
 
-        HiveAuthController().addDataUser(dataUser: usersModel);
+        HiveAuth().addDataUser(dataUser: usersModel);
         if (token.isNotEmpty) {
           sharedPreference.setString("id", userID);
           sharedPreference.setString("token", token);
@@ -111,6 +111,10 @@ class AuthController extends GetxController {
     }
   }
 
+  //   void signUpWithGoogle() async {
+  //   final user = await SocialMediaAuth().signInWithGoogle();
+  //   print(user);
+  // }
   Future<void> login({
     required String email,
     required String password,
@@ -135,7 +139,7 @@ class AuthController extends GetxController {
               "firstName", userData.firstName.toString());
           sharedPreference.setString("lastName", userData.lastName.toString());
         }
-        HiveAuthController().addDataUser(dataUser: userData);
+        HiveAuth().addDataUser(dataUser: userData);
       }
 
       stopLording();

@@ -26,4 +26,8 @@ class AddressService {
       return null;
     }
   }
+
+  deleteOneAddress(String id) {
+    CrudFirebase().deleteData(tableName: AddressModel.tableName, id: id);
+  }
 }

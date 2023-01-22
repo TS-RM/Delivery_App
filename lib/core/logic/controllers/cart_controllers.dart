@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
 import 'package:tashil_food_app/data/cart/model/cart_data_model.dart';
 import 'package:tashil_food_app/data/cart/model/cart_model.dart';
@@ -17,6 +16,19 @@ class CartController extends GetxController {
 
   String cartListString = '';
   CartDataModel? cartDataHive;
+
+  bool isLoading = false;
+
+  void startLoading() {
+    isLoading = true;
+    update();
+  }
+
+  void stopLoading() {
+    isLoading = false;
+    update();
+  }
+
   @override
   void onInit() async {
     // storage.remove('cartDataList');
@@ -77,22 +89,35 @@ class CartController extends GetxController {
     required String name,
     required String image,
   }) async {
+    startLoading();
     final totalPrice = quantity * price;
     String id = storage.getString('id') ?? '';
     final dataOrder = await CartServices().getOrderById(id, 1);
+
     if (dataOrder != null) {
+      print('هناك طلبات في الكارد');
       if (dataOrder.status == 1) {
-        addMealFromOrder(
-          dataOrder: dataOrder,
-          mealId: mealId,
-          quantity: quantity,
-          totalPrice: totalPrice,
-          price: price,
-          name: name,
-          image: image,
-        );
+        print('أضافة الي طلب سابق ');
+        addMealInCart(
+            dataOrder: dataOrder,
+            totalPrice: totalPrice,
+            quantity: quantity,
+            price: price,
+            mealId: mealId,
+            image: image,
+            name: name);
+        // addMealFromOrder(
+        //   dataOrder: dataOrder,
+        //   mealId: mealId,
+        //   quantity: quantity,
+        //   totalPrice: totalPrice,
+        //   price: price,
+        //   name: name,
+        //   image: image,
+        // );
       }
     } else {
+      print('أضافة طلب جديد');
       addOrderAndMeal(
         id: id,
         mealId: mealId,
@@ -103,6 +128,40 @@ class CartController extends GetxController {
         image: image,
       );
       // orderAndCartData.refresh();
+    }
+    stopLoading();
+  }
+
+  void addMealInCart(
+      {required int quantity,
+      required String mealId,
+      required num price,
+      required num totalPrice,
+      required String name,
+      required String image,
+      required OrderModel dataOrder}) {
+    final orderAndMeal = CartHiveService().getCartData();
+    if (orderAndMeal != null) {
+      final index = orderAndMeal.cartData!
+          .indexWhere((element) => element.mealId == mealId);
+      if (index >= 0) {
+        final dataCart = orderAndMeal.cartData![index];
+        addToCart(
+            index: index,
+            orderId: orderAndMeal.orderId.toString(),
+            cartData: dataCart,
+            quantity: quantity);
+      } else {
+        addMealFromOrder(
+          dataOrder: dataOrder,
+          mealId: mealId,
+          quantity: quantity,
+          totalPrice: totalPrice,
+          price: price,
+          name: name,
+          image: image,
+        );
+      }
     }
   }
 
@@ -180,6 +239,32 @@ class CartController extends GetxController {
     }
     // final String encodedData = CartDataModel.encode(orderAndCartData!);
     // storage.setString('cartDataList', encodedData);
+  }
+
+  void addToCart(
+      {required String orderId,
+      required CartModel cartData,
+      required int quantity,
+      required int index}) {
+    int quantityUpdate = cartData.quantity!.toInt() + quantity;
+    int newPrice = cartData.unitPrice!.toInt() * quantityUpdate;
+    CartModel cartUpdate = CartModel(
+      id: cartData.id,
+      mealId: cartData.mealId,
+      unitPrice: cartData.unitPrice,
+      quantity: quantityUpdate,
+      totalPrice: newPrice,
+      image: cartData.image,
+      name: cartData.name,
+    );
+    CartServices()
+        .updateMealToCart(orderId, cartData.id.toString(), cartUpdate);
+    orderAndCartData!.cartData![index] = cartUpdate;
+    final total = cartTotalPriceAdd(orderAndCartData!.cartData!);
+    CartServices().updateOrderPrice(orderId, total);
+    orderAndCartData!.priceOrder = total;
+    CartHiveService().addCartData(dataUser: orderAndCartData!);
+    update();
   }
 
   void counterAddProductToCart(String orderId, CartModel cartData) {
@@ -292,6 +377,7 @@ class CartController extends GetxController {
   void deleteFromOrder({required String idOrder}) async {
     CartServices().deleteOrder(idOrder);
     // storage.remove('cartDataList');
+    CartHiveService().deleteAll();
     orderAndCartData!.cartData!.clear();
     orderAndCartData = CartDataModel();
     CartHiveService().deleteCartData();

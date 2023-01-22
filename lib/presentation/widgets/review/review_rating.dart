@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
-import 'package:tashil_food_app/core/logic/controllers/review_product_controllers.dart';
+import 'package:tashil_food_app/core/logic/controllers/review_rating_meal_controllers.dart';
 
 class ReviewRating extends StatelessWidget {
-  final reviewProductController = Get.find<PreviewProductController>();
+  final reviewProductController = Get.find<PreviewRatingMealController>();
 
   ReviewRating({super.key});
 
@@ -20,9 +20,10 @@ class ReviewRating extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               reviewProductController.currentSelected.value = index;
-              reviewProductController.showProductReviews(
-                  reviewProductController.idProduct.toString(),
-                  reviewProductController.sizeList[index]);
+              reviewProductController.showProductReviews2(
+                reviewProductController.idProduct.toString(),
+                reviewProductController.sizeList[index],
+              );
               // print('index $index');
             },
             child: Obx(

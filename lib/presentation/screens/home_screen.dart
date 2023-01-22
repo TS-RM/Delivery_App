@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     homeController.homeCategoryList.value = [];
 
     homeController.viewHomeCategory();
-    homeController.viewStaticHomeOffer();
+    homeController.viewHomeOffer();
     homeController.getDataMealsHome();
   }
 

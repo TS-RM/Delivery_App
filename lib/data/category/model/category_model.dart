@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class CategoryModel {
   String? id;
   String? name;
@@ -20,4 +22,15 @@ class CategoryModel {
     data['logo'] = logo;
     return data;
   }
+
+  static String encode(List<CategoryModel> category) => json.encode(
+        category
+            .map<Map<String, dynamic>>((category) => category.toJson())
+            .toList(),
+      );
+
+  static List<CategoryModel> decode(String musics) =>
+      (json.decode(musics) as List<dynamic>)
+          .map<CategoryModel>((item) => CategoryModel.fromJson(item))
+          .toList();
 }

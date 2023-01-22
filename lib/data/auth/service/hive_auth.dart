@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/init/init_boxses.dart';
 import 'package:tashil_food_app/data/auth/model/user_hive_model.dart';
 import 'package:tashil_food_app/data/auth/model/user_model.dart';
 
-class HiveAuthController {
+class HiveAuth {
   String idBox = "myBox";
-  // @override
-  // void onInit() {
-  //   getDataUser();
-  //   super.onInit();
-  // }
 
   UserHiveModel? getDataUser() {
     final box = Boxes.getUser();

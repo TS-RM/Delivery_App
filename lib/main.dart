@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
           // ThemeController().themeDataGet
           initialRoute: SharedPref.instance.getString('token') != null
               ? ScreenName.mainScreen
-              :AppRoutes.splash,
+              : AppRoutes.splash,
           getPages: AppRoutes.routes,
         );
       },

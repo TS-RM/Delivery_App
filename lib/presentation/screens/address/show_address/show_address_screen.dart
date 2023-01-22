@@ -45,9 +45,9 @@ class ShowAddress extends StatelessWidget {
               : GestureDetector(
                   onTap: () {
                     addressShowController.inRoute
-                        ? Get.toNamed(ScreenName.addressInMapScreen,
+                        ? Get.offAndToNamed(ScreenName.addressInMapScreen,
                             arguments: {'router': true})
-                        : Get.toNamed(ScreenName.addressInMapScreen,
+                        : Get.offAndToNamed(ScreenName.addressInMapScreen,
                             arguments: {'router': false});
                   },
                   child: Padding(
@@ -88,13 +88,16 @@ class ShowAddress extends StatelessWidget {
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return CardShowAddress(
+                                      onPressed: () {
+                                        addressShowController.deleteAddress(
+                                            address[index].id.toString());
+                                      },
                                       onClick: addressShowController.inRoute
                                           ? () {
                                               addressShowController
                                                   .addAddressInOrder(
                                                       addressShowController
-                                                              .allAddressUser[
-                                                          index]);
+                                                          .address[index]);
                                               checkoutController
                                                   .updateAddress();
                                               Get.offNamed(
@@ -148,9 +151,13 @@ Widget textShow({
 
 class CardShowAddress extends StatelessWidget {
   const CardShowAddress(
-      {super.key, required this.addressModel, required this.onClick});
+      {super.key,
+      required this.addressModel,
+      required this.onClick,
+      required this.onPressed});
   final AddressModel addressModel;
   final void Function()? onClick;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -181,7 +188,7 @@ class CardShowAddress extends StatelessWidget {
             color: Theme.of(context).textTheme.headlineLarge!.color,
           ),
           trailing: IconButton(
-            onPressed: () {},
+            onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               side: BorderSide.none,
               minimumSize: Size(30.w, 50),

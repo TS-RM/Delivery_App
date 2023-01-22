@@ -3,15 +3,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tashil_food_app/data/meals/model/meal_model.dart';
+import 'package:tashil_food_app/data/rating/model/rating_model.dart';
 import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 
 class CardRev extends StatelessWidget {
   const CardRev({
     Key? key,
-    required this.data,
+    required this.ratingModel,
   }) : super(key: key);
-  final MealModel data;
+  final RatingModel ratingModel;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -27,9 +27,9 @@ class CardRev extends StatelessWidget {
                 CircleAvatar(
                   radius: 30,
                   child: ClipOval(
-                    child: data.userId != null
+                    child: ratingModel.userData != null
                         ? CachedNetworkImage(
-                            imageUrl: ' data.user!.image!',
+                            imageUrl: ratingModel.userData!.image.toString(),
                             placeholder: (context, url) =>
                                 const CircularProgressIndicator(),
                             errorWidget: (context, url, error) => Image.asset(
@@ -56,7 +56,7 @@ class CardRev extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    data.userId != null
+                    ratingModel.userID != null
                         ? TextWithFont().textShow(
                             color: Theme.of(context)
                                 .textTheme
@@ -64,7 +64,9 @@ class CardRev extends StatelessWidget {
                                 .color,
                             fontSize: 18.sp,
                             fontWeight: FontWeight.normal,
-                            text: 'data.user!.firstName!')
+                            text: '${ratingModel.userData!.firstName}  '
+                                    .toString() +
+                                '${ratingModel.userData!.lastName}'.toString())
                         : TextWithFont().textShow(
                             color: Theme.of(context)
                                 .textTheme
@@ -74,7 +76,7 @@ class CardRev extends StatelessWidget {
                             fontWeight: FontWeight.normal,
                             text: 'unknown'),
                     RatingBar.builder(
-                      initialRating: 3, // data.rate!.toDouble(),
+                      initialRating: ratingModel.rate!.toDouble(),
                       minRating: 1,
                       direction: Axis.horizontal,
                       allowHalfRating: true,
@@ -97,7 +99,7 @@ class CardRev extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                '   data.feedback!',
+                ratingModel.title.toString(),
                 style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
@@ -117,7 +119,7 @@ class CardRev extends StatelessWidget {
               child: TextWithFont().textShow(
                   color: Theme.of(context).textTheme.headlineLarge!.color!,
                   fontSize: 16.sp,
-                  text: 'data.createdAt!.substring(0, 10)',
+                  text: ratingModel.createdDate.toString().substring(0, 10),
                   fontWeight: FontWeight.w500),
             ),
             SizedBox(

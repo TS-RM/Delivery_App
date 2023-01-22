@@ -24,13 +24,13 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // HomeServices.viewHomeRestaurants;
 // context.theme.appBarTheme
-
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-          systemNavigationBarColor:
-              Theme.of(context).bottomNavigationBarTheme.backgroundColor!,
-          statusBarColor: Theme.of(context).textTheme.displaySmall!.color),
-    );
+    // TODO
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   SystemUiOverlayStyle(
+    //       systemNavigationBarColor:
+    //           Theme.of(context).bottomNavigationBarTheme.backgroundColor!,
+    //       statusBarColor: Theme.of(context).textTheme.displaySmall!.color),
+    // );
     return SafeArea(
       child: Obx(
         () {

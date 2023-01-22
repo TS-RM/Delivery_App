@@ -53,7 +53,7 @@ class RestaurantScreen extends GetView<CategoryPageController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "525",
+                              controller.count.value.toString(),
                               style: TextStyle(
                                 letterSpacing: 0.5,
                                 color: Theme.of(context)

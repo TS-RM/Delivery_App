@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
 import 'package:tashil_food_app/data/address/model/address_model.dart';
 import 'package:tashil_food_app/data/address/service/address_service.dart';
+import 'package:tashil_food_app/data/address/service/hive_address_service.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
 class AddressController extends GetxController {
@@ -36,17 +37,18 @@ class AddressController extends GetxController {
   @override
   void onInit() {
     isRoute = Get.arguments['router'] as bool;
-    print(isRoute);
+
     cameraPosition = const CameraPosition(target: LatLng(0, 0), zoom: 10.0);
     getCurrentLocation();
-    allAddressUserLocal = storage.getString('allAddressUser') ?? '';
-    if (allAddressUserLocal != '') {
-      final allAddress = AddressModel.decode(allAddressUserLocal);
 
-      allAddressUser.addAll(allAddress);
-    } else {
-      getDataAddress();
-    }
+    // allAddressUserLocal = storage.getString('allAddressUser') ?? '';
+    // if (allAddressUserLocal != '') {
+    //   final allAddress = AddressModel.decode(allAddressUserLocal);
+
+    //   allAddressUser.addAll(allAddress);
+    // } else {
+    //   getDataAddress();
+    // }
     super.onInit();
   }
 
@@ -107,9 +109,9 @@ class AddressController extends GetxController {
           latLng!.latitude, latLng!.longitude,
           localeIdentifier: 'en');
 
-      var first = placemark.first;
+      Placemark first = placemark.first;
       // print(first);
-      if (first != null) {
+      if (placemark != null) {
         address = address = 'street ${first.street}';
         // print(first.locality);
       }
@@ -150,12 +152,16 @@ class AddressController extends GetxController {
     try {
       final data =
           await AddressService().addToAddress(addressModel: addressModel);
-      allAddressUser.add(data);
-      final String encodedData = AddressModel.encode(allAddressUser);
-      storage.setString('allAddressUser', encodedData);
+      AddressHiveService().addAddressData(addressModel: data);
+      // allAddressUser.add(data);
+      // final String encodedData = AddressModel.encode(allAddressUser);
+      // storage.setString('allAddressUser', encodedData);
       isRoute
-          ? Get.offNamed(ScreenName.checkoutScreen)
-          : Get.offNamed(ScreenName.showAddress);
+          ? Get.offAndToNamed(ScreenName.showAddress,
+              arguments: {'inRoute': true})
+          : Get.offAndToNamed(
+              ScreenName.showAddress,
+            );
       stopLoading();
     } catch (error) {
       stopLoading();

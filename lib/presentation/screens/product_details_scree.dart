@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
-import 'package:tashil_food_app/data/auth/service/hive_auth_controllers.dart';
+import 'package:tashil_food_app/data/auth/service/hive_auth.dart';
 import 'package:tashil_food_app/core/logic/controllers/cart_controllers.dart';
 import 'package:tashil_food_app/core/logic/controllers/favorites_conntroller.dart';
 import 'package:tashil_food_app/core/logic/controllers/meal_details_controller.dart';
@@ -24,15 +24,16 @@ import '../widgets/productDetails/show_image.dart';
 import '../widgets/productDetails/sub_title.dart';
 import '../widgets/productDetails/title_text.dart';
 
-class ProductDetailsScreen extends GetView<MealDetailsController> {
+class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({Key? key}) : super(key: key);
 
+  final controller = Get.find<MealDetailsController>();
   final favoriteController = Get.find<FavoritesController>();
   final cartController = Get.find<CartController>();
 
   chick() {
     print('done1');
-
+    // GetView<MealDetailsController>
     String name = controller.mealsData.value.name!;
     String image = controller.mealsData.value.image!;
     int price = controller.mealsData.value.price!;
@@ -113,8 +114,8 @@ class ProductDetailsScreen extends GetView<MealDetailsController> {
                                                   .mealsData.value.name!,
                                             ),
                                             SupTitle(
-                                              supTitle: controller
-                                                  .mealsData.value.category!,
+                                              supTitle:
+                                                  controller.category.value,
                                               cal: controller
                                                   .mealsData.value.calories
                                                   .toString(),
@@ -176,11 +177,10 @@ class ProductDetailsScreen extends GetView<MealDetailsController> {
                                                                   ScreenName
                                                                       .allReviewScreen,
                                                                   arguments: {
-                                                                    'productId':
-                                                                        controller
-                                                                            .mealsData
-                                                                            .value
-                                                                            .id
+                                                                    'mealID': controller
+                                                                        .mealsData
+                                                                        .value
+                                                                        .id
                                                                   });
                                                             },
                                                             child:
@@ -227,27 +227,39 @@ class ProductDetailsScreen extends GetView<MealDetailsController> {
                                               height: 20.h,
                                             ),
                                             GetBuilder<CartController>(
-                                              builder: (_) => Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 20),
-                                                child: AuthButton(
-                                                  press: SharedPref.instance
-                                                              .getString(
-                                                                  'token') ==
-                                                          null
-                                                      ? () {
-                                                          Get.toNamed(ScreenName
-                                                              .loginScreen);
-                                                          getSnackbar(
-                                                              supTitle:
-                                                                  'You must login with account'.tr,
-                                                              title: "Note".tr);
-                                                        }
-                                                      : () => chick(),
-                                                  text: 'Add to Cart'.tr,
-                                                ),
-                                              ),
+                                              builder: (_) => cartController
+                                                      .isLoading
+                                                  ? Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color: mainColor,
+                                                      ),
+                                                    )
+                                                  : Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20),
+                                                      child: AuthButton(
+                                                        press: SharedPref
+                                                                    .instance
+                                                                    .getString(
+                                                                        'token') ==
+                                                                null
+                                                            ? () {
+                                                                Get.offAllNamed(
+                                                                    ScreenName
+                                                                        .loginScreen);
+                                                                getSnackbar(
+                                                                    supTitle:
+                                                                        'You must login with account'
+                                                                            .tr,
+                                                                    title: "Note"
+                                                                        .tr);
+                                                              }
+                                                            : () => chick(),
+                                                        text: 'Add to Cart'.tr,
+                                                      ),
+                                                    ),
                                             ),
                                             const SizedBox(
                                               height: 15,
@@ -259,13 +271,18 @@ class ProductDetailsScreen extends GetView<MealDetailsController> {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      SharedPref.instance.getString("token") != null
-                                        ? favoriteController.mangeFavorites(
-                                          controller.mealsData.value)
-                                        : getSnackbar(
-                                            title: "Error".tr,
-                                            supTitle: "You must login with account".tr,
-                                          );
+                                      SharedPref.instance.getString("token") !=
+                                              null
+                                          ? favoriteController.addFavorites(
+                                              mealModel:
+                                                  controller.mealsData.value,
+                                            )
+                                          : getSnackbar(
+                                              title: "Error".tr,
+                                              supTitle:
+                                                  "You must login with account"
+                                                      .tr,
+                                            );
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -273,30 +290,36 @@ class ProductDetailsScreen extends GetView<MealDetailsController> {
                                       ),
                                       child: Align(
                                         alignment: Alignment.topRight,
-                                        child: Container(
-                                          width: 60.w,
-                                          height: 60.h,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Theme.of(context).cardColor,
-                                          ),
-                                          child: SharedPref.instance.getString("token") != null
-                                            ? favoriteController.isFavorites(
-                                                  controller.mealsData.value,
-                                                  controller
-                                                      .mealsData.value.id!)
-                                              ? Icon(
-                                                  Icons.favorite,
-                                                  color: mainColor,
-                                                )
-                                              : Icon(
-                                                  Icons.favorite_border,
-                                                  color: mainColor,
-                                                )
-                                            : Icon(
-                                                Icons.favorite_border,
-                                                color: mainColor,
-                                              )
+                                        child: GetBuilder<FavoritesController>(
+                                          builder: (_) => Container(
+                                              width: 60.w,
+                                              height: 60.h,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color:
+                                                    Theme.of(context).cardColor,
+                                              ),
+                                              child: SharedPref.instance
+                                                          .getString("token") !=
+                                                      null
+                                                  ? favoriteController
+                                                          .isFavorites(
+                                                              controller
+                                                                  .mealsData
+                                                                  .value
+                                                                  .id!)
+                                                      ? Icon(
+                                                          Icons.favorite,
+                                                          color: mainColor,
+                                                        )
+                                                      : Icon(
+                                                          Icons.favorite_border,
+                                                          color: mainColor,
+                                                        )
+                                                  : Icon(
+                                                      Icons.favorite_border,
+                                                      color: mainColor,
+                                                    )),
                                         ),
                                       ),
                                     ),

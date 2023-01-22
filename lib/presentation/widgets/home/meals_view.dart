@@ -68,7 +68,7 @@ class FoodsView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "HeshamHehsma HeshamHehsma" + homeProductData.name!,
+                      homeProductData.name!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

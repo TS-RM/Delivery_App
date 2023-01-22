@@ -29,4 +29,10 @@ class AddressHiveService {
     box.delete(id);
     debugPrint('تم حذف  العناوين');
   }
+
+  void deleteAllAddress() {
+    final box = Boxes.getAddressData();
+    box.clear();
+    debugPrint('تم حذف كل  العناوين');
+  }
 }

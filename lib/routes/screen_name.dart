@@ -31,6 +31,7 @@ class ScreenName {
 
   static const allReviewScreen = '/allReviewScreen';
   static const writeReviewScreen = '/writeReviewScreen';
+  static const editReviewScreen = '/EditReviewScreen';
   static const allFoodScreen = '/allFoodScreen';
   static const offerScreen = '/offerScreen';
   static const updatePassword = '/changePassword';

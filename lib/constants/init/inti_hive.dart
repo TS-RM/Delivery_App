@@ -4,6 +4,8 @@ import 'package:tashil_food_app/data/address/model/address_model.dart';
 import 'package:tashil_food_app/data/auth/model/user_hive_model.dart';
 import 'package:tashil_food_app/data/cart/model/cart_data_model.dart';
 import 'package:tashil_food_app/data/cart/model/cart_model.dart';
+import 'package:tashil_food_app/data/favorites/model/favorites_hive_model.dart';
+import 'package:tashil_food_app/data/meals/model/meal_model.dart';
 
 class InitHive {
   static Future initBoxHive() async {
@@ -21,5 +23,10 @@ class InitHive {
 
     Hive.registerAdapter(AddressModelAdapter());
     await Hive.openBox<AddressModel>('dataAddress'); // box 3
+
+    Hive.registerAdapter(FavoritesHiveModelAdapter());
+    Hive.registerAdapter(MealModelAdapter());
+    await Hive.openBox<FavoritesHiveModel>('dataFavorites'); // box 4
+    await Hive.openBox<MealModel>('dataMeal'); // box 5
   }
 }
