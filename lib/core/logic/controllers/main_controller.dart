@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
 import 'package:tashil_food_app/presentation/screens/cart/cart_screen.dart';
-import 'package:tashil_food_app/presentation/screens/favorites_screen.dart';
-import 'package:tashil_food_app/presentation/screens/home_screen.dart';
+import 'package:tashil_food_app/presentation/screens/favorites/favorites_screen.dart';
+import 'package:tashil_food_app/presentation/screens/home/home_screen.dart';
 import 'package:tashil_food_app/presentation/screens/settings/settings_screen.dart';
 
 class MainController extends GetxController {
@@ -23,6 +23,7 @@ class MainController extends GetxController {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home_outlined),
         title: ("Home".tr),
+        activeColorSecondary: Colors.white,
         activeColorPrimary: mainColor,
         inactiveColorPrimary: appBarPreferredSizeColor,
         inactiveColorSecondary: appBarPreferredSizeColor,
@@ -34,6 +35,7 @@ class MainController extends GetxController {
           Icons.shopping_cart,
         ),
         title: ("Cart".tr),
+        activeColorSecondary: Colors.white,
         activeColorPrimary: mainColor,
         inactiveColorPrimary: appBarPreferredSizeColor,
         inactiveColorSecondary: appBarPreferredSizeColor,
@@ -45,6 +47,7 @@ class MainController extends GetxController {
           Icons.favorite_border,
         ),
         title: ("Favorites".tr),
+        activeColorSecondary: Colors.white,
         activeColorPrimary: mainColor,
         inactiveColorPrimary: appBarPreferredSizeColor,
         inactiveColorSecondary: appBarPreferredSizeColor,
@@ -56,6 +59,7 @@ class MainController extends GetxController {
           Icons.settings_outlined,
         ),
         title: ("Setting".tr),
+        activeColorSecondary: Colors.white,
         activeColorPrimary: mainColor,
         inactiveColorPrimary: appBarPreferredSizeColor,
         inactiveColorSecondary: appBarPreferredSizeColor,

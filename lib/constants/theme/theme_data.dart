@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tashil_food_app/constants/theme/fonts/font_app.dart';
 
+const Color backgroundDarkTheme = Color(0xFF18172B);
 Color mainColor = const Color(0xFFc1541b);
 const Color onBoardingDocsColor = Color.fromRGBO(144, 152, 177, 1);
 const Color onBoardingIndicatorColor = Color.fromRGBO(229, 229, 229, 1);
@@ -67,8 +68,12 @@ class ThemesApp {
           ),
         ),
         appBarTheme: const AppBarTheme(
-          systemOverlayStyle:
-              SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark,
+            systemNavigationBarColor: Colors.white,
+            systemNavigationBarIconBrightness: Brightness.dark,
+          ),
           backgroundColor: Colors.transparent,
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black45),
@@ -85,7 +90,7 @@ class ThemesApp {
 
   static ThemeData darkTheme() => ThemeData(
         fontFamily: AppFonts.elMessiri,
-        scaffoldBackgroundColor: const Color(0xFF18172B),
+        scaffoldBackgroundColor: backgroundDarkTheme,
         primaryColor: darkGreyClr,
         secondaryHeaderColor: const Color(0xFF27273c),
         textTheme: TextTheme(
@@ -99,7 +104,7 @@ class ThemesApp {
           //   color: Color(0xFF18172B).withOpacity(.8),
           // ),
           displaySmall: TextStyle(
-            color: const Color(0xFF18172B).withOpacity(.8),
+            color: backgroundDarkTheme.withOpacity(.8),
           ),
           // headline3: TextStyle(
           //   color: Colors.black,
@@ -123,8 +128,12 @@ class ThemesApp {
           ),
         ),
         appBarTheme: const AppBarTheme(
-          systemOverlayStyle:
-              SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: backgroundDarkTheme,
+            statusBarIconBrightness: Brightness.light,
+            systemNavigationBarColor: backgroundDarkTheme,
+            systemNavigationBarIconBrightness: Brightness.light,
+          ),
           backgroundColor: Colors.transparent,
           elevation: 0,
           toolbarTextStyle: TextStyle(color: Colors.white),

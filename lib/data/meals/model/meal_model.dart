@@ -1,20 +1,50 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive/hive.dart';
+part 'meal_model.g.dart';
 
-class MealModel {
+@HiveType(typeId: 5)
+class MealModel extends HiveObject {
+  @HiveField(0)
   String? id;
+
+  @HiveField(1)
   String? name;
+
+  @HiveField(2)
   String? description;
+
+  @HiveField(3)
   String? image;
-  double? rating;
+
+  @HiveField(4)
+  num? rating;
+
+  @HiveField(5)
   int? price;
+
+  @HiveField(6)
   int? calories;
+
+  @HiveField(7)
   int? status;
+
+  @HiveField(8)
   DateTime? addedDate;
+
+  @HiveField(9)
   String? userId;
+
+  @HiveField(10)
   String? option;
+
+  @HiveField(11)
   String? category;
+
+  final String _tableName = 'Meals';
+
+  String get tableName => _tableName;
 
   MealModel({
     this.id,

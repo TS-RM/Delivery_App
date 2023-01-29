@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
-import 'package:tashil_food_app/core/logic/controllers/review_product_controllers.dart';
+import 'package:tashil_food_app/core/logic/controllers/review_rating_meal_controllers.dart';
 import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
@@ -10,9 +10,9 @@ import '../../widgets/review/rating_bar.dart';
 
 class WriteReviewScreen extends StatelessWidget {
   WriteReviewScreen({Key? key}) : super(key: key);
-  final reviewController = Get.find<PreviewProductController>();
+  final reviewController = Get.find<PreviewRatingMealController>();
   final _formKey = GlobalKey<FormState>();
-  final myController = TextEditingController();
+  final titleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,8 @@ class WriteReviewScreen extends StatelessWidget {
                       .withOpacity(.6),
                   fontSize: 14.sp,
                   text:
-                      'Please write overall level of satisfaction with your shipping / Delivery Service'.tr,
+                      'Please write overall level of satisfaction with your shipping / Delivery Service'
+                          .tr,
                   fontWeight: FontWeight.w500),
               SizedBox(
                 height: 20.h,
@@ -69,7 +70,7 @@ class WriteReviewScreen extends StatelessWidget {
               Form(
                 key: _formKey,
                 child: TextFormField(
-                  controller: myController,
+                  controller: titleController,
                   minLines: 6,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
@@ -108,40 +109,47 @@ class WriteReviewScreen extends StatelessWidget {
               SizedBox(
                 height: Get.height * .1,
               ),
-              GetBuilder<PreviewProductController>(builder: (_) {
+              GetBuilder<PreviewRatingMealController>(builder: (_) {
                 return Align(
                   alignment: Alignment.center,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          String feedback = myController.text.trim();
-                          await reviewController.addReviewProduct(
-                              feedback,
-                              reviewController.rating.toInt(),
-                              reviewController.idProduct.toString());
-                          // reviewController.showProductReviews(
-                          //     reviewController.idProdect.toString());
+                  child: reviewController.isLoading
+                      ? CircularProgressIndicator(
+                          color: mainColor,
+                        )
+                      : ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              String title = titleController.text.trim();
+                              await reviewController.addReviewProduct(
+                                  mealID: reviewController.idProduct.toString(),
+                                  rate: reviewController.rating.toInt(),
+                                  title: title);
+                              reviewController.showProductReviews(
+                                reviewController.idProduct.toString(),
+                                // reviewController.rating.toInt(),
+                              );
 
-                          Get.offNamed(ScreenName.allReviewScreen, arguments: {
-                            'prodectId': reviewController.idProduct!.toInt()
-                          });
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shadowColor: Colors.white,
-                        side: BorderSide.none,
-                        // primary:,
-                        minimumSize: Size(120.w, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: TextWithFont().textShow(
-                        color: Colors.white,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                        text: 'Save'.tr,
-                      )),
+                              Get.offNamed(ScreenName.allReviewScreen,
+                                  arguments: {
+                                    'mealID': reviewController.idProduct
+                                  });
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.white,
+                            side: BorderSide.none,
+                            // primary:,
+                            minimumSize: Size(120.w, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: TextWithFont().textShow(
+                            color: Colors.white,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                            text: 'Save'.tr,
+                          )),
                 );
               })
             ],

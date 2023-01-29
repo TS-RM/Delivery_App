@@ -45,9 +45,9 @@ class ShowAddress extends StatelessWidget {
               : GestureDetector(
                   onTap: () {
                     addressShowController.inRoute
-                        ? Get.toNamed(ScreenName.addressInMapScreen,
+                        ? Get.offAndToNamed(ScreenName.addressInMapScreen,
                             arguments: {'router': true})
-                        : Get.toNamed(ScreenName.addressInMapScreen,
+                        : Get.offAndToNamed(ScreenName.addressInMapScreen,
                             arguments: {'router': false});
                   },
                   child: Padding(
@@ -65,67 +65,70 @@ class ShowAddress extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              GetBuilder<AddressShowController>(
-                builder: (_) => CheckSessionUser(
-                  child: addressShowController.isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(color: mainColor),
-                        )
-                      : ValueListenableBuilder(
-                          valueListenable: Boxes.getAddressData().listenable(),
-                          builder: (context, addressModel, child) {
-                            if (addressModel.isNotEmpty) {
-                              final address = addressModel.values.toList();
-                              return SizedBox(
-                                width: double.infinity,
-                                child: ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: address.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return CardShowAddress(
-                                      onClick: addressShowController.inRoute
-                                          ? () {
-                                              addressShowController
-                                                  .addAddressInOrder(
-                                                      addressShowController
-                                                              .allAddressUser[
-                                                          index]);
-                                              checkoutController
-                                                  .updateAddress();
-                                              Get.offNamed(
-                                                  ScreenName.checkoutScreen);
-                                            }
-                                          : () {},
-                                      addressModel: address[index],
-                                    );
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10.0),
+          child: GetBuilder<AddressShowController>(
+            builder: (_) => CheckSessionUser(
+              child: addressShowController.isLoading
+                  ? SizedBox(
+                      height: Get.height - 100,
+                      child: Center(
+                        child: CircularProgressIndicator(color: mainColor),
+                      ),
+                    )
+                  : ValueListenableBuilder(
+                      valueListenable: Boxes.getAddressData().listenable(),
+                      builder: (context, addressModel, child) {
+                        if (addressModel.isNotEmpty) {
+                          final address = addressModel.values.toList();
+                          return SizedBox(
+                            width: double.infinity,
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: address.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return CardShowAddress(
+                                  onPressed: () {
+                                    addressShowController.deleteAddress(
+                                        address[index].id.toString());
                                   },
+                                  onClick: addressShowController.inRoute
+                                      ? () {
+                                          addressShowController
+                                              .addAddressInOrder(
+                                                  address[index]);
+                                          checkoutController.updateAddress();
+                                          Get.back();
+                                          // Get.offNamed(
+                                          //     ScreenName.checkoutScreen);
+                                        }
+                                      : () {},
+                                  addressModel: address[index],
+                                );
+                              },
+                            ),
+                          );
+                        } else {
+                          return SizedBox(
+                            height: Get.height - 100,
+                            child: Center(
+                              child: Text(
+                                "You must add an address".tr,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge!
+                                      .color!
+                                      .withOpacity(.5),
                                 ),
-                              );
-                            } else {
-                              return Center(
-                                child: Text(
-                                  "You must add an address".tr,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge!
-                                        .color!
-                                        .withOpacity(.5),
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                ),
-              ),
-            ],
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+            ),
           ),
         ),
       ),
@@ -148,9 +151,13 @@ Widget textShow({
 
 class CardShowAddress extends StatelessWidget {
   const CardShowAddress(
-      {super.key, required this.addressModel, required this.onClick});
+      {super.key,
+      required this.addressModel,
+      required this.onClick,
+      required this.onPressed});
   final AddressModel addressModel;
   final void Function()? onClick;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -181,7 +188,7 @@ class CardShowAddress extends StatelessWidget {
             color: Theme.of(context).textTheme.headlineLarge!.color,
           ),
           trailing: IconButton(
-            onPressed: () {},
+            onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               side: BorderSide.none,
               minimumSize: Size(30.w, 50),

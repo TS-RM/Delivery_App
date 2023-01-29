@@ -30,4 +30,19 @@ class CartHiveService {
     box.delete(idBox);
     debugPrint('تم حذف  بنجاح');
   }
+
+  void deleteAll() {
+    final box = Boxes.getCartData();
+    box.clear();
+  }
+
+  List<CartDataModel>? getAll() {
+    final box = Boxes.getCartData();
+    final data = box.values.toList();
+    if (data.isNotEmpty) {
+      return data;
+    } else {
+      return null;
+    }
+  }
 }

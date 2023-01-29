@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tashil_food_app/data/services/check_internet.dart';
+import 'package:tashil_food_app/core/helper/check_internet.dart';
 import 'package:tashil_food_app/constants/enums/status_request.dart';
 
 class CrudFirebase {
@@ -87,13 +87,41 @@ class CrudFirebase {
         if (data.isNotEmpty) {
           return Right(data);
         } else {
-          return const Left(StatusRequest.serverFailure);
+          return const Left(StatusRequest.failure);
         }
       } else {
         return const Left(StatusRequest.offlineFailure);
       }
     } catch (cc) {
       print('%%%%%%%%%%%%%%%%%%%%%%%%%');
+      return const Left(StatusRequest.serverFailure);
+    }
+  }
+
+  Future<Either<StatusRequest, List<Map<String, dynamic>>>> readDataLimit({
+    required String tableName,
+    required int limit,
+  }) async {
+    try {
+      // Todo
+      if (await checkInternet()) {
+        List<Map<String, dynamic>> data = [];
+        CollectionReference mealsReference =
+            FirebaseFirestore.instance.collection(tableName);
+        QuerySnapshot querySnapshot = await mealsReference.limit(limit).get();
+
+        List<QueryDocumentSnapshot> listDocs = querySnapshot.docs;
+        data = listDocs.map((e) => e.data()).toList().cast();
+
+        if (data.isNotEmpty) {
+          return Right(data);
+        } else {
+          return const Left(StatusRequest.failure);
+        }
+      } else {
+        return const Left(StatusRequest.offlineFailure);
+      }
+    } catch (e) {
       return const Left(StatusRequest.serverFailure);
     }
   }
@@ -137,7 +165,7 @@ class CrudFirebase {
         if (data.isNotEmpty) {
           return Right(data);
         } else {
-          return const Left(StatusRequest.serverFailure);
+          return const Left(StatusRequest.failure);
         }
       } else {
         return const Left(StatusRequest.offlineFailure);
@@ -176,6 +204,37 @@ class CrudFirebase {
     required String value1,
     required String fieldName2,
     required num value2,
+  }) async {
+    try {
+      List<Map<String, dynamic>> data = [];
+      CollectionReference mealsReference =
+          FirebaseFirestore.instance.collection(tableName);
+      QuerySnapshot querySnapshot = await mealsReference
+          .where(fieldName1, isEqualTo: value1)
+          .where(fieldName2, isEqualTo: value2)
+          .get();
+      List<QueryDocumentSnapshot> listDocs = querySnapshot.docs;
+      data = listDocs.map((e) => e.data()).toList().cast();
+      if (data.isNotEmpty) {
+        return data;
+      } else {
+        return null;
+      }
+    } on FirebaseException catch (e) {
+      print('=========================');
+      debugPrint(e.code);
+      debugPrint(e.message);
+      print('=========================');
+      return null;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>?> readDataWhere2FieldString({
+    required String tableName,
+    required String fieldName1,
+    required String value1,
+    required String fieldName2,
+    required String value2,
   }) async {
     try {
       List<Map<String, dynamic>> data = [];
@@ -335,6 +394,88 @@ class CrudFirebase {
     } on FirebaseException catch (e) {
       print(e.code);
       print(e.message);
+    }
+  }
+
+  Future<int> getCountRow({
+    required String tableName,
+    required String fieldName,
+    required String value,
+  }) async {
+    final data = await FirebaseFirestore.instance
+        .collection(tableName)
+        .where(fieldName, isEqualTo: value)
+        .get();
+    int totalCount = 0;
+    totalCount = data.docs.length;
+    // for (var doc in data.docs.length) {
+    //   totalCount++;
+    // }
+
+    return totalCount;
+  }
+
+  Future<List<Map<String, dynamic>>?> getFilterMeals({
+    required String tableName,
+    required String fieldName,
+    required String fieldName1,
+    required String value,
+    required num greaterValue,
+    required num smallerValue,
+  }) async {
+    try {
+      List<Map<String, dynamic>> data = [];
+      final listDocs = await FirebaseFirestore.instance
+          .collection(tableName)
+          .where(fieldName, isEqualTo: value)
+          .where(fieldName1,
+              isGreaterThanOrEqualTo: smallerValue,
+              isLessThanOrEqualTo: greaterValue)
+          .get();
+      data = listDocs.docs.map((e) => e.data()).toList().cast();
+      if (data.isNotEmpty) {
+        return data;
+      } else {
+        return null;
+      }
+    } on FirebaseException catch (e) {
+      debugPrint(e.code);
+      debugPrint(e.message);
+      return null;
+    }
+  }
+
+  Future<Either<StatusRequest, List<Map<String, dynamic>>>>
+      readDataLimitAndOrderBy({
+    required String tableName,
+    required int limit,
+    required String orderByField,
+  }) async {
+    try {
+      // Todo
+      if (await checkInternet()) {
+        List<Map<String, dynamic>> data = [];
+        CollectionReference mealsReference =
+            FirebaseFirestore.instance.collection(tableName);
+        QuerySnapshot querySnapshot = await mealsReference
+            .limit(limit)
+            .orderBy(orderByField, descending: true)
+            .get();
+
+        List<QueryDocumentSnapshot> listDocs = querySnapshot.docs;
+        data = listDocs.map((e) => e.data()).toList().cast();
+
+        if (data.isNotEmpty) {
+          return Right(data);
+        } else {
+          return const Left(StatusRequest.serverFailure);
+        }
+      } else {
+        return const Left(StatusRequest.offlineFailure);
+      }
+    } catch (cc) {
+      print('%%%%%%%%%%%%%%%%%%%%%%%%%');
+      return const Left(StatusRequest.serverFailure);
     }
   }
 }

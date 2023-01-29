@@ -3,21 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
+import 'package:tashil_food_app/data/meals/model/meal_model.dart';
 
 class LeadingListTile extends StatelessWidget {
   const LeadingListTile({
     Key? key,
-    required this.name,
-    required this.image,
-    required this.category,
-    required this.price,
-    required this.calories,
+    required this.mealModel,
   }) : super(key: key);
-  final String name;
-  final String image;
-  final String category;
-  final String price;
-  final String calories;
+  final MealModel mealModel;
 
   @override
   Widget build(BuildContext context) {
@@ -29,23 +22,24 @@ class LeadingListTile extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                  radius: 35,
-                  child: ClipOval(
-                    // borderRadius: BorderRadius.circular(8.0),
-                    child: CachedNetworkImage(
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(
-                        Icons.photo_rounded,
-                        color: Colors.grey.shade700,
-                        size: 100,
-                      ),
-                      height: 90.0.h,
-                      width: 90.w,
-                      fit: BoxFit.cover,
-                      imageUrl: image,
+                radius: 35,
+                child: ClipOval(
+                  // borderRadius: BorderRadius.circular(8.0),
+                  child: CachedNetworkImage(
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(
+                      Icons.photo_rounded,
+                      color: Colors.grey.shade700,
+                      size: 100,
                     ),
-                  )),
+                    height: 90.0.h,
+                    width: 90.w,
+                    fit: BoxFit.cover,
+                    imageUrl: mealModel.image.toString(),
+                  ),
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
                 child: Column(
@@ -59,7 +53,7 @@ class LeadingListTile extends StatelessWidget {
                             maxLines: 1,
                             softWrap: false,
                             overflow: TextOverflow.ellipsis,
-                            name,
+                            mealModel.name.toString(),
                             style: TextStyle(
                               fontSize: 20,
                               color: Theme.of(context)
@@ -87,9 +81,9 @@ class LeadingListTile extends StatelessWidget {
                     Row(
                       children: [
                         SizedBox(
-                          width: 150,
+                          width: 140,
                           child: Text(
-                            category,
+                            mealModel.category.toString(),
                             style: TextStyle(
                               fontSize: 12,
                               color: Theme.of(context)
@@ -103,7 +97,7 @@ class LeadingListTile extends StatelessWidget {
                           width: 40.w,
                         ),
                         Text(
-                          '$price\$',
+                          '${mealModel.price}\$',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -129,7 +123,7 @@ class LeadingListTile extends StatelessWidget {
                         SizedBox(
                           width: 5.w,
                         ),
-                        Text( '$calories ${'Kcal'.tr}',
+                        Text('${mealModel.calories} ${'Kcal'.tr}',
                             style: TextStyle(
                               fontSize: 12,
                               color: Theme.of(context)

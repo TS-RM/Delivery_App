@@ -13,8 +13,9 @@ class AppBarCategory extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      systemOverlayStyle:
-          const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
+      // TODO
+      // systemOverlayStyle:
+      //     const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
       title: TextWithFont().textShow(
         text: 'Categorys'.tr,
         fontSize: 20.sp,

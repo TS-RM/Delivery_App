@@ -4,6 +4,7 @@ import 'package:tashil_food_app/data/address/model/address_model.dart';
 import 'package:tashil_food_app/data/bills/model/bill_model.dart';
 import 'package:tashil_food_app/data/bills/service/bill_service.dart';
 import 'package:tashil_food_app/data/cart/model/cart_data_model.dart';
+import 'package:tashil_food_app/data/cart/service/cart_hive_service.dart';
 import 'package:tashil_food_app/data/cart/service/cart_services.dart';
 import 'package:tashil_food_app/data/paymet/model/payment_model.dart';
 import 'package:tashil_food_app/data/paymet/service/payment_service.dart';
@@ -103,7 +104,8 @@ class CheckoutController extends GetxController {
           ScreenName.mainScreen,
           (route) => false,
         );
-        storage.remove('cartDataList');
+        CartHiveService().deleteAll();
+        // storage.remove('cartDataList');
         statusAddress = false;
         statusPayment = false;
         stopLoading();

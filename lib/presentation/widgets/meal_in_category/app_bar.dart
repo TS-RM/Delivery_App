@@ -15,12 +15,11 @@ class AppBarRes extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       title: Text(
-        argumentData[0]["name"],
+        argumentData[0]["name"] ?? '',
         style: TextStyle(
             color: Theme.of(context).textTheme.headlineLarge!.color,
             fontWeight: FontWeight.bold,
-            fontSize: 20.sp
-        ),
+            fontSize: 20.sp),
       ),
       leading: IconButton(
         onPressed: () => Get.back(),

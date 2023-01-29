@@ -21,7 +21,7 @@ import 'package:tashil_food_app/core/logic/bindings/search_bindings.dart';
 import 'package:tashil_food_app/core/logic/bindings/settengs_bindings.dart';
 import 'package:tashil_food_app/presentation/screens/address/add_address/write_address_screen.dart';
 import 'package:tashil_food_app/presentation/screens/address/show_address/show_address_screen.dart';
-import 'package:tashil_food_app/presentation/screens/all_meals_screen.dart';
+import 'package:tashil_food_app/presentation/screens/meals/all_meals_screen.dart';
 import 'package:tashil_food_app/presentation/screens/auth/ForgotPassword/forgot_password_screen.dart';
 import 'package:tashil_food_app/presentation/screens/auth/ForgotPassword/new_password_screen.dart';
 import 'package:tashil_food_app/presentation/screens/auth/ForgotPassword/send_otp_screen.dart';
@@ -30,14 +30,15 @@ import 'package:tashil_food_app/presentation/screens/auth/signup_screen.dart';
 import 'package:tashil_food_app/presentation/screens/cart/cart_screen.dart';
 import 'package:tashil_food_app/presentation/screens/address/add_address/address_in_map_screen.dart';
 import 'package:tashil_food_app/presentation/screens/cart/checkout_screen.dart';
-import 'package:tashil_food_app/presentation/screens/category_screen.dart';
-import 'package:tashil_food_app/presentation/screens/home_screen.dart';
-import 'package:tashil_food_app/presentation/screens/main_screen.dart';
-import 'package:tashil_food_app/presentation/screens/notification_screen.dart';
-import 'package:tashil_food_app/presentation/screens/onboarding_screen.dart';
-import 'package:tashil_food_app/presentation/screens/product_details_scree.dart';
-import 'package:tashil_food_app/presentation/screens/meals_in_category_screen.dart';
+import 'package:tashil_food_app/presentation/screens/category/category_screen.dart';
+import 'package:tashil_food_app/presentation/screens/home/home_screen.dart';
+import 'package:tashil_food_app/presentation/screens/main/main_screen.dart';
+import 'package:tashil_food_app/presentation/screens/notification/notification_screen.dart';
+import 'package:tashil_food_app/presentation/screens/splach/onboarding_screen.dart';
+import 'package:tashil_food_app/presentation/screens/meals/product_details_scree.dart';
+import 'package:tashil_food_app/presentation/screens/category/meals_in_category_screen.dart';
 import 'package:tashil_food_app/presentation/screens/review_rating/all_review_screen.dart';
+import 'package:tashil_food_app/presentation/screens/review_rating/edit_review_screen.dart';
 import 'package:tashil_food_app/presentation/screens/review_rating/write_review_screen.dart';
 import 'package:tashil_food_app/presentation/screens/search/filter_screen.dart';
 import 'package:tashil_food_app/presentation/screens/search/search_screen.dart';
@@ -48,12 +49,13 @@ import 'package:tashil_food_app/presentation/screens/settings/offer_screen.dart'
 import 'package:tashil_food_app/presentation/screens/settings/profile_setting.dart';
 import 'package:tashil_food_app/presentation/screens/settings/rest_password.dart';
 import 'package:tashil_food_app/presentation/screens/settings/settings_screen.dart';
-import 'package:tashil_food_app/presentation/screens/splash_screen.dart';
+import 'package:tashil_food_app/presentation/screens/splach/splash_screen.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
 class AppRoutes {
   static const splash = ScreenName.splashScreen;
 
+  static const login = ScreenName.loginScreen;
   static final routes = [
     GetPage(
       name: ScreenName.splashScreen,
@@ -69,6 +71,9 @@ class AppRoutes {
     GetPage(
       name: ScreenName.signUpScreen,
       page: () => SignUpScreen(),
+      bindings: [
+        AuthBindings(),
+      ],
     ),
     GetPage(
         name: ScreenName.onBoardingScreen,
@@ -120,6 +125,7 @@ class AppRoutes {
     GetPage(
       name: ScreenName.filterScreen,
       page: () => FilterScreen(),
+      binding: MealsBindings(),
     ),
     GetPage(
         name: ScreenName.settingsScreen,
@@ -177,11 +183,15 @@ class AppRoutes {
     GetPage(
         name: ScreenName.allReviewScreen,
         page: () => AllReviewScreen(),
-        binding: RreviewProductBinding()),
+        binding: PreviewRatingMealBinding()),
 
     GetPage(
       name: ScreenName.writeReviewScreen,
       page: () => WriteReviewScreen(),
+    ),
+    GetPage(
+      name: ScreenName.editReviewScreen,
+      page: () => EditReviewScreen(),
     ),
     GetPage(
         name: ScreenName.allFoodScreen,

@@ -52,16 +52,14 @@ class AddressShowController extends GetxController {
     if (id != '') {
       final dataAddress = await AddressService().getAllAddress(id);
       if (dataAddress != null) {
-        allAddressUser.addAll(dataAddress);
-        print('gjjgjgjgjg');
+        // allAddressUser.addAll(dataAddress);
         for (var element in dataAddress) {
-          print(element.addressInMap);
           AddressHiveService().addAddressData(addressModel: element);
         }
         // dataAddress.map((addressModel) =>
         //     AddressHiveService().addAddressData(addressModel: addressModel));
-        final String encodedData = AddressModel.encode(allAddressUser);
-        storage.setString('allAddressUser', encodedData);
+        // final String encodedData = AddressModel.encode(allAddressUser);
+        // storage.setString('allAddressUser', encodedData);
       }
     }
     stopLoading();
@@ -76,5 +74,10 @@ class AddressShowController extends GetxController {
   saveAddress() {
     SharedPref.instance.setString("currentAddress", address);
     update();
+  }
+
+  deleteAddress(String id) {
+    AddressHiveService().deleteAddressData(id);
+    AddressService().deleteOneAddress(id);
   }
 }

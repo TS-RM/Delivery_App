@@ -6,8 +6,9 @@ import 'package:tashil_food_app/presentation/widgets/auth/login/socal_card.dart'
 class SocialLogin extends StatelessWidget {
   const SocialLogin({
     Key? key,
+    required this.loginGoogle,
   }) : super(key: key);
-
+  final void Function()? loginGoogle;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,7 +22,7 @@ class SocialLogin extends StatelessWidget {
           ),
           SocialCard(
             icon: ImageAsset.google,
-            press: () {},
+            press: loginGoogle,
           ),
         ],
       ),

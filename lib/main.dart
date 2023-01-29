@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tashil_food_app/constants/init/init_boxses.dart';
 import 'package:tashil_food_app/constants/init/inti_hive.dart';
+import 'package:tashil_food_app/constants/locale/locale.dart';
 import 'package:tashil_food_app/constants/locale/locale_controller.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
 import 'package:tashil_food_app/core/logic/bindings/controller_binding.dart';
 import 'package:tashil_food_app/core/logic/controllers/theme_controller.dart';
+import 'package:tashil_food_app/data/auth/service/hive_auth.dart';
+import 'package:tashil_food_app/data/settings/service/settings_service.dart';
 import 'package:tashil_food_app/routes/route_generator.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 // import 'package:tashil_food_app/test_fi/test_firbase.dart';
@@ -37,7 +41,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // SharedPrefs.instance.clear();
-
+    // final box = Boxes.getDarkModeData();
+    // var isLang = box.get(
+    //   'isLang',
+    // );
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
@@ -45,21 +52,33 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           initialBinding: ControllerBinding(),
-
           debugShowCheckedModeBanner: false,
           title: 'MASHWY APP',
-          locale: SharedPref.instance.getString("curruntLang") == null
-              ? Get.deviceLocale
-              : Locale(SharedPref.instance.getString("curruntLang")!),
+          // locale: SharedPref.instance.getString("curruntLang") == null
+          //     ? Get.deviceLocale
+          //     : Locale(SharedPref.instance.getString("curruntLang")!),
+
+          // locale: SettingsService().getSettingsData()?.isLang == null
+          //     ? Get.deviceLocale
+          //     : Locale(SettingsService().getSettingsData()!.isLang.toString()),
+          locale:
+              //  box.get('isLang') == null
+              //     ? Get.deviceLocale
+              //     :
+              Locale(MyLocaleController().getLang()),
+          // Locale(box.get('isLang',
+          //     defaultValue: Get.deviceLocale!.scriptCode.toString())),
           translations: MyLocale(),
           fallbackLocale: const Locale('en'),
           theme: ThemesApp.lightTheme(),
           darkTheme: ThemesApp.darkTheme(),
           themeMode: ThemeController().themeDataGet,
           // ThemeController().themeDataGet
-          initialRoute: SharedPref.instance.getString('token') != null
+          initialRoute: HiveAuth().getDataUser() != null
               ? ScreenName.mainScreen
-              :AppRoutes.splash,
+              : SettingsService().getSettingsData()?.isShowSplash == null
+                  ? AppRoutes.splash
+                  : AppRoutes.login,
           getPages: AppRoutes.routes,
         );
       },

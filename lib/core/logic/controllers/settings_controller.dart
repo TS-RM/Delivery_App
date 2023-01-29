@@ -3,10 +3,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
+import 'package:tashil_food_app/data/address/service/hive_address_service.dart';
 import 'package:tashil_food_app/data/cart/service/cart_hive_service.dart';
+import 'package:tashil_food_app/data/favorites/service/favorites_service_hive.dart';
 import 'package:tashil_food_app/data/firebase/auth_firebase.dart';
 import 'package:tashil_food_app/data/firebase/firestore_auth.dart';
-import 'package:tashil_food_app/data/services/auth_api.dart';
 import 'package:tashil_food_app/presentation/widgets/get_snackbar.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
@@ -143,6 +144,8 @@ class SettingsController extends GetxController {
     // AuthApi().logout();
     ServiceAuthFirebase().logOut();
     CartHiveService().deleteCartData();
+    AddressHiveService().deleteAllAddress();
+    FavoritesHiveService().deleteAllFavorites();
     // shared.remove('token');
     // shared.remove("id");
     // shared.remove("phone_number");

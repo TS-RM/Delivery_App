@@ -24,8 +24,12 @@ class UsersModel {
     this.moneyAccount,
     this.userType,
   });
+  final String _tableName = 'Users';
+
+  String get tableName => _tableName;
 
   UsersModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     image = json['image'];
     password = json['password'];
     email = json['Email'];

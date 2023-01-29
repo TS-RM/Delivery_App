@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
+import 'package:tashil_food_app/data/auth/service/hive_auth.dart';
 import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
@@ -11,7 +12,7 @@ class CheckSessionUser extends StatelessWidget {
   final Widget _childWidget;
   @override
   Widget build(BuildContext context) {
-    return SharedPref.instance.getString('token') == null
+    return HiveAuth().getDataUser() == null
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

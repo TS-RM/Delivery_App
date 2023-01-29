@@ -93,9 +93,8 @@ class OfferScreen extends StatelessWidget {
                                         child: ClipOval(
                                           child: CachedNetworkImage(
                                             imageUrl: offerController
-                                                .offerList[index]
-                                                .dataMeals!
-                                                .image!,
+                                                .offerList[index].image
+                                                .toString(),
                                             placeholder: (context, url) =>
                                                 const CircularProgressIndicator(),
                                             errorWidget:
@@ -126,7 +125,8 @@ class OfferScreen extends StatelessWidget {
                                                     .color),
                                             TextWithFont().textShow(
                                                 text: offerController
-                                                    .offerList[index].deadline!
+                                                    .offerList[index].deadline
+                                                    .toString()
                                                     .substring(0, 10),
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w400,
@@ -148,8 +148,7 @@ class OfferScreen extends StatelessWidget {
                                           TextWithFont().textShow(
                                               text: offerController
                                                   .offerList[index]
-                                                  .dataMeals!
-                                                  .rating!
+                                                  .priceAfterDiscount
                                                   .toString(),
                                               fontSize: 14.sp,
                                               fontWeight: FontWeight.w400,

@@ -202,16 +202,16 @@ class CheckoutScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: const Color.fromARGB(255, 215, 213, 213),
                 ),
-                child: Visibility(
-                  visible: controller.statusPayment && controller.statusAddress,
-                  replacement: Text(
-                    'Add your address and pay for current order to start process it'
-                        .tr,
-                    style: const TextStyle(
-                        color: Colors.black87),
-                  ),
-                  child: GetBuilder<CheckoutController>(builder: (_) {
-                    return controller.isLoading
+                child: GetBuilder<CheckoutController>(builder: (_) {
+                  return Visibility(
+                    visible:
+                        controller.statusPayment && controller.statusAddress,
+                    replacement: Text(
+                      'Add your address and pay for current order to start process it'
+                          .tr,
+                      style: const TextStyle(color: Colors.black87),
+                    ),
+                    child: controller.isLoading
                         ? const CircularProgressIndicator()
                         : AuthButton(
                             press: () {
@@ -222,9 +222,9 @@ class CheckoutScreen extends StatelessWidget {
                               // showModalBottomSheetDone(context);
                             },
                             text: 'Send Order'.tr,
-                          );
-                  }),
-                )),
+                          ),
+                  );
+                })),
           ),
         ),
       ]),

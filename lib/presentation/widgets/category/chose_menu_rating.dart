@@ -18,52 +18,50 @@ class ChoseMenuRating extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return GestureDetector(
-              onTap: () {
-                mealsController.currentSelectedRating.value = index;
-              },
-              child: Obx(
-                () => Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: mealsController.currentSelectedRating.value == index
-                        ? mainColor
-                        : Theme.of(context).textTheme.headlineMedium!.color,
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: mainColor.withOpacity(0.4),
-                      width: 1,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        mealsController.sizeList[index].toString(),
-                        style: TextStyle(
-                            color:
-                                mealsController.currentSelectedRating.value ==
-                                        index
-                                    ? Colors.white
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge!
-                                        .color!
-                                        .withOpacity(.5),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.sp),
-                      ),
-                      SizedBox(
-                        width: 2.w,
-                      ),
-                      const Icon(
-                        Icons.star,
-                        color: Color.fromARGB(255, 243, 192, 71),
-                        size: 18,
-                      )
-                    ],
-                  ),
+            onTap: () {
+              mealsController.currentSelectedRating.value = index;
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: mealsController.currentSelectedRating.value == index
+                    ? mainColor
+                    : Theme.of(context).textTheme.headlineMedium!.color,
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                  color: mainColor.withOpacity(0.4),
+                  width: 1,
                 ),
-              ));
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    mealsController.sizeList[index].toString(),
+                    style: TextStyle(
+                        color:
+                            mealsController.currentSelectedRating.value == index
+                                ? Colors.white
+                                : Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge!
+                                    .color!
+                                    .withOpacity(.5),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.sp),
+                  ),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  const Icon(
+                    Icons.star,
+                    color: Color.fromARGB(255, 243, 192, 71),
+                    size: 18,
+                  )
+                ],
+              ),
+            ),
+          );
         },
         separatorBuilder: (context, index) => const SizedBox(
           width: 10,

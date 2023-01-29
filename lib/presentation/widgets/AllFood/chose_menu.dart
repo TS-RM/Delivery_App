@@ -11,7 +11,7 @@ class ChoseMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 70,
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
@@ -35,7 +35,7 @@ class ChoseMenu extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  mealsController.allCategoriesList[index].title!,
+                  mealsController.allCategoriesList[index].name!,
                   style: TextStyle(
                     color: mealsController.currentSelected.value == index
                         ? Colors.white

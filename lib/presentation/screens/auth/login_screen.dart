@@ -41,7 +41,8 @@ class LoginScreen extends StatelessWidget {
                   width: double.infinity,
                   // height: 0.77.sh,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
+                    padding:
+                        const EdgeInsets.only(left: 25, right: 25, top: 30),
                     child: Form(
                       key: fromKey,
                       child: Column(
@@ -117,14 +118,16 @@ class LoginScreen extends StatelessWidget {
                                       AuthButton(
                                         text: 'Login'.tr,
                                         press: () {
-                                          if (fromKey.currentState!.validate()) {
+                                          if (fromKey.currentState!
+                                              .validate()) {
                                             String email =
                                                 emailController.text.trim();
                                             String password =
                                                 passwordController.text;
-              
+
                                             controller.login(
-                                                email: email, password: password);
+                                                email: email,
+                                                password: password);
                                           }
                                         },
                                       ),
@@ -134,7 +137,8 @@ class LoginScreen extends StatelessWidget {
                                       AuthButton(
                                         text: 'Access as Guest'.tr,
                                         backcolor: Colors.grey.shade400,
-                                        color : Theme.of(context).iconTheme.color,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
                                         press: () {
                                           Get.toNamed(ScreenName.mainScreen);
                                         },
@@ -149,8 +153,12 @@ class LoginScreen extends StatelessWidget {
                           SizedBox(
                             height: 45.h,
                           ),
-                          const LoginWithText(),
-                          const SocialLogin(),
+                          //   const LoginWithText(),
+                          //  SocialLogin(
+                          //     loginGoogle: () {
+                          //       controller.signUpWithGoogle();
+                          //     },
+                          //   ),
                         ],
                       ),
                     ),

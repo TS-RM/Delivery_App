@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tashil_food_app/constants/init/init_boxses.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
 
 import '../auth/preferred_size_in_app_bar.dart';
@@ -29,7 +31,18 @@ class AppBarCart extends StatelessWidget with PreferredSizeWidget {
       actions: [
         SharedPref.instance.getString('token') == null
             ? const SizedBox()
-            : IconButton(onPressed: onPressed, icon: const Icon(Icons.delete))
+            : ValueListenableBuilder(
+                valueListenable: Boxes.getCartData().listenable(),
+                builder: (context, cartData, child) {
+                  if (cartData.isNotEmpty) {
+                    final order = cartData.values.first;
+                    return IconButton(
+                        onPressed: onPressed, icon: const Icon(Icons.delete));
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
       ],
     );
   }

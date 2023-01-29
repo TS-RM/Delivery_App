@@ -68,7 +68,7 @@ class FoodsView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "HeshamHehsma HeshamHehsma" + homeProductData.name!,
+                      homeProductData.name!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -99,7 +99,7 @@ class FoodsView extends StatelessWidget {
                           textBaseline: TextBaseline.alphabetic,
                           children: [
                             RatingBarIndicator(
-                              rating: homeProductData.rating!,
+                              rating: homeProductData.rating!.toDouble(),
                               itemCount: 1,
                               itemSize: 16.0,
                               physics: const BouncingScrollPhysics(),

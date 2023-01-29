@@ -10,7 +10,7 @@ import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 import '../category/chose_menu_rating.dart';
 import '../search/filter/range_slider.dart';
 
-final controller = Get.find<MealsController>();
+// final controller = Get.find<MealsController>();
 
 class AppBarMeal extends StatelessWidget with PreferredSizeWidget {
   AppBarMeal({
@@ -67,12 +67,16 @@ void appModalBottomSheet(BuildContext context) {
       topRight: Radius.circular(30),
     )),
     builder: (context) {
+      final controller = Get.find<MealsController>();
       return SingleChildScrollView(
         child: Container(
           // height: MediaQuery.of(context).size.height * 0.7,
           decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-          ),
+              color: Theme.of(context).cardColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              )),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: Column(
@@ -83,21 +87,24 @@ void appModalBottomSheet(BuildContext context) {
                       SharedPref.instance.getString("curruntLang") == 'en'
                           ? Alignment.topRight
                           : Alignment.bottomLeft,
-                  child: TextButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       controller.filterProduct(
                         category: controller
                             .allCategoriesList[controller.currentSelected.value]
-                            .title!,
+                            .id!,
                         price: controller.currentSelectedSlider.value.toInt(),
                         rating: controller
                             .sizeList[controller.currentSelectedRating.value],
+                        ratingValue: controller.values.value,
                         subcategory: 'subcategory1',
                       );
                     },
                     child: Text(
                       'Apply'.tr,
-                      style: TextStyle(color: mainColor),
+                      style: TextStyle(
+                        color: Get.isDarkMode ? Colors.black : Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -119,15 +126,15 @@ void appModalBottomSheet(BuildContext context) {
                 // SizedBox(
                 //   height: 20.h,
                 // ),
-                TextWithFont().textShow(
-                    color: Theme.of(context).textTheme.headlineLarge!.color!,
-                    fontSize: 20.sp,
-                    text: 'Rating'.tr,
-                    fontWeight: FontWeight.bold),
-                ChoseMenuRating(),
-                SizedBox(
-                  height: 20.h,
-                ),
+                // TextWithFont().textShow(
+                //     color: Theme.of(context).textTheme.headlineLarge!.color!,
+                //     fontSize: 20.sp,
+                //     text: 'Rating'.tr,
+                //     fontWeight: FontWeight.bold),
+                // ChoseMenuRating(),
+                // SizedBox(
+                //   height: 20.h,
+                // ),
                 RangeSliderFlitter(),
                 SizedBox(
                   height: 70.h,

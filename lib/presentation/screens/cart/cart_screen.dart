@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tashil_food_app/constants/init/init_boxses.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
+import 'package:tashil_food_app/constants/theme/theme_data.dart';
 import 'package:tashil_food_app/core/logic/controllers/cart_controllers.dart';
 import 'package:tashil_food_app/data/cart/model/cart_data_model.dart';
 import 'package:tashil_food_app/presentation/widgets/auth/check_session_user.dart';
@@ -30,14 +31,18 @@ class CartScreen extends StatelessWidget {
         },
       ),
       body: CheckSessionUser(
-        child: ValueListenableBuilder(
+        child: ValueListenableBuilder<Box<CartDataModel>>(
           valueListenable: Boxes.getCartData().listenable(),
           builder: (context, cartData, child) {
             if (cartData.isNotEmpty) {
               final order = cartData.values.first;
               return buildCart(order, context, controller: cartController);
             } else {
-              return notOrder(context: context);
+              return cartController.isLoading
+                  ? CircularProgressIndicator(
+                      color: mainColor,
+                    )
+                  : notOrder(context: context);
             }
           },
         ),
@@ -95,8 +100,8 @@ Widget buildCart(CartDataModel cartDataModel, BuildContext context,
                               press: cartDataModel.cartData != null
                                   ? () {
                                       // controller.printData();
-                                      if (controller
-                                          .orderAndCartData!.cartData!.isNotEmpty) {
+                                      if (controller.orderAndCartData!.cartData!
+                                          .isNotEmpty) {
                                         Get.toNamed(ScreenName.checkoutScreen);
                                       }
                                     }
@@ -150,7 +155,7 @@ Widget notOrder({required BuildContext context}) {
               children: [
                 Center(
                     child: Text(
-                  " ليس لديك طلب في السلة ".tr,
+                  "You don't have a request in the cart".tr,
                   style: TextStyle(
                     fontSize: 20,
                     color: Theme.of(context)

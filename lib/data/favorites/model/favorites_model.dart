@@ -1,54 +1,40 @@
 import 'dart:convert';
 
+import 'package:tashil_food_app/data/meals/model/meal_model.dart';
+
 class FavoritesModel {
-  int? id;
-  String? name;
-  String? image;
-  int? rating;
-  int? price;
-  int? calories;
-  String? description;
+  String? id;
+  String? mealID;
+  String? userID;
+  MealModel? mealModel;
+
+  static String tableName = 'Favorites';
 
   FavoritesModel({
     this.id,
-    this.name,
-    this.image,
-    this.rating,
-    this.price,
-    this.calories,
-    this.description,
+    this.mealModel,
+    this.mealID,
+    this.userID,
   });
 
   FavoritesModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    image = json['image'];
-    rating = json['rating'];
-    price = json['price'];
-    calories = json['calories'];
-    description = json['description'];
+    mealID = json['mealID'];
+    userID = json['userID'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['name'] = name;
-    data['image'] = image;
-    data['rating'] = rating;
-    data['price'] = price;
-    data['calories'] = calories;
-    data['description'] = description;
+    data['mealID'] = mealID;
+    data['userID'] = userID;
     return data;
   }
 
   static Map<String, dynamic> toMap(FavoritesModel favoritesData) => {
         'id': favoritesData.id,
-        'image': favoritesData.image,
-        'rating': favoritesData.rating,
-        'price': favoritesData.price,
-        'name': favoritesData.name,
-        'calories': favoritesData.calories,
-        'description': favoritesData.description,
+        'mealID': favoritesData.mealID,
+        'userID': favoritesData.userID,
       };
   static String encode(List<FavoritesModel> musics) => json.encode(
         musics
