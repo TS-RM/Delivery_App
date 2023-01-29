@@ -65,70 +65,70 @@ class ShowAddress extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              GetBuilder<AddressShowController>(
-                builder: (_) => CheckSessionUser(
-                  child: addressShowController.isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(color: mainColor),
-                        )
-                      : ValueListenableBuilder(
-                          valueListenable: Boxes.getAddressData().listenable(),
-                          builder: (context, addressModel, child) {
-                            if (addressModel.isNotEmpty) {
-                              final address = addressModel.values.toList();
-                              return SizedBox(
-                                width: double.infinity,
-                                child: ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: address.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return CardShowAddress(
-                                      onPressed: () {
-                                        addressShowController.deleteAddress(
-                                            address[index].id.toString());
-                                      },
-                                      onClick: addressShowController.inRoute
-                                          ? () {
-                                              addressShowController
-                                                  .addAddressInOrder(
-                                                      addressShowController
-                                                          .address[index]);
-                                              checkoutController
-                                                  .updateAddress();
-                                              Get.offNamed(
-                                                  ScreenName.checkoutScreen);
-                                            }
-                                          : () {},
-                                      addressModel: address[index],
-                                    );
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10.0),
+          child: GetBuilder<AddressShowController>(
+            builder: (_) => CheckSessionUser(
+              child: addressShowController.isLoading
+                  ? SizedBox(
+                      height: Get.height - 100,
+                      child: Center(
+                        child: CircularProgressIndicator(color: mainColor),
+                      ),
+                    )
+                  : ValueListenableBuilder(
+                      valueListenable: Boxes.getAddressData().listenable(),
+                      builder: (context, addressModel, child) {
+                        if (addressModel.isNotEmpty) {
+                          final address = addressModel.values.toList();
+                          return SizedBox(
+                            width: double.infinity,
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: address.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return CardShowAddress(
+                                  onPressed: () {
+                                    addressShowController.deleteAddress(
+                                        address[index].id.toString());
                                   },
+                                  onClick: addressShowController.inRoute
+                                      ? () {
+                                          addressShowController
+                                              .addAddressInOrder(
+                                                  address[index]);
+                                          checkoutController.updateAddress();
+                                          Get.back();
+                                          // Get.offNamed(
+                                          //     ScreenName.checkoutScreen);
+                                        }
+                                      : () {},
+                                  addressModel: address[index],
+                                );
+                              },
+                            ),
+                          );
+                        } else {
+                          return SizedBox(
+                            height: Get.height - 100,
+                            child: Center(
+                              child: Text(
+                                "You must add an address".tr,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge!
+                                      .color!
+                                      .withOpacity(.5),
                                 ),
-                              );
-                            } else {
-                              return Center(
-                                child: Text(
-                                  "You must add an address".tr,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge!
-                                        .color!
-                                        .withOpacity(.5),
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                ),
-              ),
-            ],
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+            ),
           ),
         ),
       ),

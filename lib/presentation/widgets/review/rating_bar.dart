@@ -24,7 +24,7 @@ class _RatingBarReview extends State<RatingBarReview> {
       initialRating: widget.initialRating ?? _initialRating,
       minRating: 1,
       direction: _isVertical ? Axis.vertical : Axis.horizontal,
-      allowHalfRating: true,
+      // allowHalfRating: true, // تقيمم مع الفواصل
       unratedColor: Colors.amber.withAlpha(50),
       itemCount: 5,
       itemSize: 40.0,

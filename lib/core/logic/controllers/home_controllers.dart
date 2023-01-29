@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
 import 'package:tashil_food_app/data/category/model/category_model.dart';
+import 'package:tashil_food_app/data/category/service/category_hive_service.dart';
 import 'package:tashil_food_app/data/meals/model/meal_model.dart';
 import 'package:tashil_food_app/core/helper/handing_data_controller.dart';
 import 'package:tashil_food_app/constants/enums/status_request.dart';
@@ -40,8 +41,7 @@ class HomeController extends GetxController {
         final dataList =
             (response as List).map((e) => CategoryModel.fromJson(e)).toList();
         homeCategoryList.addAll(dataList);
-        final String encodedData = CategoryModel.encode(homeCategoryList);
-        await storage.setString('homeCategoryList', encodedData);
+        await CategoryHiveService().addListCategory(dataCategory: dataList);
       } else {
         statusRequestCategory = StatusRequest.failure;
       }

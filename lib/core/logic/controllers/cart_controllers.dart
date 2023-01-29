@@ -43,9 +43,6 @@ class CartController extends GetxController {
     cartDataHive = CartHiveService().getCartData();
     if (cartDataHive != null) {
       orderAndCartData = cartDataHive;
-      print(cartDataHive!.orderId);
-      print(cartDataHive!.priceOrder);
-      print(cartDataHive!.cartData);
     } else {
       getDataOrderAndCart();
     }

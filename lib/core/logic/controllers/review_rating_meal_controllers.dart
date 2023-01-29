@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tashil_food_app/data/auth/service/user_service.dart';
+import 'package:tashil_food_app/data/meals/service/meal_service.dart';
 import 'package:tashil_food_app/data/rating/model/rating_model.dart';
 import 'package:tashil_food_app/data/rating/service/rating_service.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
@@ -14,7 +15,6 @@ class PreviewRatingMealController extends GetxController {
   String? idProduct;
   var currentSelected = 5.obs;
   bool isNull = false;
-  String? notDataRating = 'ليس هناك تقيمات';
   String? idUser;
   final List sizeList = [
     5,
@@ -42,8 +42,71 @@ class PreviewRatingMealController extends GetxController {
     idProduct = mealID;
     showProductReviews(mealID.toString());
     checkUserAddRating();
+
     super.onInit();
   }
+
+  // List<num> rate5 = [];
+  // List<num> rate4 = [];
+  // List<num> rate3 = [];
+  // List<num> rate2 = [];
+  // List<num> rate1 = [];
+  // num star5Score = 0;
+
+  calcRateInMeal(String mealID) async {
+    var response = await RatingServices().showMealReviews(mealID);
+    if (response != null) {
+      final dataList = (response).map((e) => RatingModel.fromJson(e)).toList();
+      if (dataList.isNotEmpty) {
+        final dataRate = dataList
+                .map((e) => e.rate)
+                .reduce((value, element) => value! + element!)! /
+            dataList.length;
+        MealService().updateMealRating(mealID, dataRate);
+      } else {}
+
+      // for (var element in dataList) {
+      //   calcNumberRate(element);
+      // }
+      // star5Score = calcScoreTotal(calcRateOne(rate1), calcRateOne(rate2),
+      //         calcRateOne(rate3), calcRateOne(rate4), calcRateOne(rate5)) /
+      //     calcTotal(calcRateOne(rate1), calcRateOne(rate2), calcRateOne(rate3),
+      //         calcRateOne(rate4), calcRateOne(rate5));
+
+      // print(star5Score.toStringAsFixed(1));
+      // print(3.75.toStringAsFixed(1));
+    }
+  }
+
+  // num calcScoreTotal(num one, num tow, num there, num fore, num five) {
+  //   return (five * 5) + (fore * 4) + (there * 3) + (tow * 2) + (one * 1);
+  // }
+
+  // num calcTotal(num one, num tow, num there, num fore, num five) {
+  //   return five + fore + there + tow + one;
+  // }
+
+  // num calcRateOne(List<num> number) {
+  //   num sum = 0;
+  //   for (var e in number) {
+  //     sum += e;
+  //   }
+  //   return sum;
+  // }
+
+  // calcNumberRate(RatingModel ratingModel) {
+  //   if (ratingModel.rate == 5) {
+  //     rate5.add(ratingModel.rate!);
+  //   } else if (ratingModel.rate == 4) {
+  //     rate4.add(ratingModel.rate!);
+  //   } else if (ratingModel.rate == 3) {
+  //     rate3.add(ratingModel.rate!);
+  //   } else if (ratingModel.rate == 2) {
+  //     rate2.add(ratingModel.rate!);
+  //   } else {
+  //     rate1.add(ratingModel.rate!);
+  //   }
+  // }
 
   getEdit() {
     startLoading();
@@ -132,6 +195,7 @@ class PreviewRatingMealController extends GetxController {
       var response =
           await RatingServices().addToRating(ratingModel: ratingModel);
       if (response != null) {
+        calcRateInMeal(mealID.toString());
         print('تمت الاضافة بنجاح');
         final data = await getDataUser(response);
         reviewRatingMeal.add(data);

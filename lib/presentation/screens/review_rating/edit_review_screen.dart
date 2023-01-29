@@ -119,41 +119,45 @@ class EditReviewScreen extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.center,
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                String title = titleController.text.trim();
-                                await reviewController.editReviewProduct(
-                                    ratingData:
-                                        reviewController.ratingUserEdit!,
-                                    rate: reviewController.rating,
-                                    title: title);
-                                reviewController.showProductReviews(
-                                  reviewController.idProduct.toString(),
-                                  // reviewController.rating.toInt(),
-                                );
+                        child: reviewController.isLoading
+                            ? CircularProgressIndicator(
+                                color: mainColor,
+                              )
+                            : ElevatedButton(
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    String title = titleController.text.trim();
+                                    await reviewController.editReviewProduct(
+                                        ratingData:
+                                            reviewController.ratingUserEdit!,
+                                        rate: reviewController.rating,
+                                        title: title);
+                                    reviewController.showProductReviews(
+                                      reviewController.idProduct.toString(),
+                                      // reviewController.rating.toInt(),
+                                    );
 
-                                Get.offNamed(ScreenName.allReviewScreen,
-                                    arguments: {
-                                      'mealID': reviewController.idProduct
-                                    });
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              shadowColor: Colors.white,
-                              side: BorderSide.none,
-                              // primary:,
-                              minimumSize: Size(220.w, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: TextWithFont().textShow(
-                              color: Colors.white,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.bold,
-                              text: 'Save',
-                            )),
+                                    Get.offNamed(ScreenName.allReviewScreen,
+                                        arguments: {
+                                          'mealID': reviewController.idProduct
+                                        });
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shadowColor: Colors.white,
+                                  side: BorderSide.none,
+                                  // primary:,
+                                  minimumSize: Size(220.w, 50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: TextWithFont().textShow(
+                                  color: Colors.white,
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.bold,
+                                  text: 'Save',
+                                )),
                       )
                     ],
                   );

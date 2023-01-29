@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tashil_food_app/data/settings/service/settings_service.dart';
 import 'package:tashil_food_app/presentation/widgets/splash/bottom_row.dart';
-import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
-import '../widgets/auth/auth_button.dart';
-import '../widgets/splash/logo_container.dart';
+import '../../widgets/auth/auth_button.dart';
+import '../../widgets/splash/logo_container.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -47,12 +47,19 @@ class SplashScreen extends StatelessWidget {
                 height: 45.h,
                 width: double.infinity,
               ),
-              AuthButton(
-                press: () {
-                  Get.toNamed(ScreenName.onBoardingScreen);
-                },
-                text: 'Let\'s get Started'.tr,
-              ),
+              SettingsService().getSettingsData() != null
+                  ? AuthButton(
+                      press: () {
+                        Get.toNamed(ScreenName.mainScreen);
+                      },
+                      text: 'get Started'.tr,
+                    )
+                  : AuthButton(
+                      press: () {
+                        Get.toNamed(ScreenName.onBoardingScreen);
+                      },
+                      text: 'Let\'s get Started'.tr,
+                    ),
               SizedBox(
                 height: 15.h,
                 width: double.infinity,

@@ -24,11 +24,10 @@ class NewPwScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: TextWithFont().textShow(
-          text: 'New Password',
+            text: 'New Password',
             color: Theme.of(context).textTheme.headlineLarge!.color,
             fontWeight: FontWeight.bold,
-            fontSize: 20.sp
-        ),
+            fontSize: 20.sp),
         elevation: 0,
       ),
       body: SizedBox(
@@ -113,9 +112,9 @@ class NewPwScreen extends StatelessWidget {
                             if (_form.currentState!.validate()) {
                               String password = passwordController.text;
 
-                              controller.resetPasswordStep3(
-                                  code: '${one[0]['code']}',
-                                  password: password);
+                              // controller.resetPasswordStep3(
+                              //     code: '${one[0]['code']}',
+                              //     password: password);
                             }
                           });
                 }),

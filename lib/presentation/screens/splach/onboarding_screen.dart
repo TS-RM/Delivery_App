@@ -7,7 +7,7 @@ import 'package:tashil_food_app/presentation/widgets/onboarding/onboarding_colum
 import 'package:tashil_food_app/presentation/widgets/onboarding/onboarding_indicator.dart';
 import 'package:tashil_food_app/presentation/widgets/onboarding/onboarding_row.dart';
 
-import '../widgets/OnBoarding/onBoarding.dart';
+import '../../widgets/OnBoarding/onBoarding.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   OnBoardingScreen({Key? key}) : super(key: key);

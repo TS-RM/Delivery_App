@@ -153,7 +153,7 @@ class AddressInMapScreen extends StatelessWidget {
                               .getString("currentAddress"));
                           Get.offAndToNamed(ScreenName.writeAddressScreen);
                         },
-                        text: 'أضافة بيانات موقعك'.tr,
+                        text: 'Add Your Location Data'.tr,
                       ),
                     );
                   }),

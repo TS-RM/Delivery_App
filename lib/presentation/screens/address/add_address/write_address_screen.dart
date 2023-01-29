@@ -55,7 +55,8 @@ class WriteAddressScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "أدخل بيانات الموقع الذي تريد توصيل الطلب له",
+                    "Enter the location data you want to deliver the order to"
+                        .tr,
                     style: TextStyle(
                       color: mainColor,
                     ),
@@ -100,7 +101,7 @@ class WriteAddressScreen extends StatelessWidget {
                       color: authTextFromFieldHintTextColor,
                     ),
                     suffixIcon: const Text(""),
-                    hintText: 'المنطقة'.tr,
+                    hintText: 'State'.tr,
                   ),
                   SizedBox(
                     height: 15.h,
@@ -121,7 +122,7 @@ class WriteAddressScreen extends StatelessWidget {
                       color: authTextFromFieldHintTextColor,
                     ),
                     suffixIcon: const Text(""),
-                    hintText: 'الشارع'.tr,
+                    hintText: 'Street'.tr,
                   ),
                   SizedBox(
                     height: 15.h,
@@ -142,7 +143,7 @@ class WriteAddressScreen extends StatelessWidget {
                       color: authTextFromFieldHintTextColor,
                     ),
                     suffixIcon: const Text(""),
-                    hintText: 'نوع العنوان : مكتب - منزل  - محل'.tr,
+                    hintText: 'Address type'.tr,
                   ),
                   SizedBox(
                     height: 15.h,
@@ -163,7 +164,7 @@ class WriteAddressScreen extends StatelessWidget {
                       color: authTextFromFieldHintTextColor,
                     ),
                     suffixIcon: const Text(""),
-                    hintText: 'بجوار : مطعم مشاوي '.tr,
+                    hintText: 'Nearby'.tr,
                   ),
                   SizedBox(
                     height: 15.h,
@@ -184,7 +185,7 @@ class WriteAddressScreen extends StatelessWidget {
                       color: authTextFromFieldHintTextColor,
                     ),
                     suffixIcon: const Text(""),
-                    hintText: 'وصف العنوان'.tr,
+                    hintText: 'Address Description'.tr,
                     maxLines: 1,
                     contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                     textInputAction: TextInputAction.done,
@@ -198,7 +199,7 @@ class WriteAddressScreen extends StatelessWidget {
                         : Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: AuthButton(
-                              text: 'حفظ الموقع'.tr,
+                              text: 'Save'.tr,
                               press: () {
                                 final isValid =
                                     formKey.currentState!.validate();

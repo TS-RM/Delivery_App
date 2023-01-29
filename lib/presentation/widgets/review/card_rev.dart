@@ -27,7 +27,7 @@ class CardRev extends StatelessWidget {
                 CircleAvatar(
                   radius: 30,
                   child: ClipOval(
-                    child: ratingModel.userData != null
+                    child: ratingModel.userData!.image != null
                         ? CachedNetworkImage(
                             imageUrl: ratingModel.userData!.image.toString(),
                             placeholder: (context, url) =>
@@ -80,6 +80,7 @@ class CardRev extends StatelessWidget {
                       minRating: 1,
                       direction: Axis.horizontal,
                       allowHalfRating: true,
+                      ignoreGestures: true,
                       itemCount: 5,
                       itemSize: 20.0,
                       itemPadding: const EdgeInsets.symmetric(horizontal: 0),

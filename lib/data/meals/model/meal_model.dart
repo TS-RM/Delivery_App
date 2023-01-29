@@ -19,7 +19,7 @@ class MealModel extends HiveObject {
   String? image;
 
   @HiveField(4)
-  double? rating;
+  num? rating;
 
   @HiveField(5)
   int? price;

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tashil_food_app/constants/theme/theme_data.dart';
 import 'package:tashil_food_app/core/logic/controllers/search_controller.dart';
 import 'package:tashil_food_app/presentation/screens/search/search_for_meal.dart';
-import '../../widgets/search/filter_container.dart';
 import '../../widgets/search/search_app_bar.dart';
 import '../../widgets/search/search_text_field.dart';
 
@@ -31,10 +29,10 @@ class SearchScreen extends StatelessWidget {
                     Expanded(
                       child: SearchTextField(),
                     ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    const FilterContainer(),
+                    // SizedBox(
+                    //   width: 5.w,
+                    // ),
+                    // const FilterContainer(),
                   ],
                 ),
               ),

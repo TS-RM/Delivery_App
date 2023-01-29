@@ -112,39 +112,44 @@ class WriteReviewScreen extends StatelessWidget {
               GetBuilder<PreviewRatingMealController>(builder: (_) {
                 return Align(
                   alignment: Alignment.center,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          String title = titleController.text.trim();
-                          await reviewController.addReviewProduct(
-                              mealID: reviewController.idProduct.toString(),
-                              rate: reviewController.rating,
-                              title: title);
-                          reviewController.showProductReviews(
-                            reviewController.idProduct.toString(),
-                            // reviewController.rating.toInt(),
-                          );
+                  child: reviewController.isLoading
+                      ? CircularProgressIndicator(
+                          color: mainColor,
+                        )
+                      : ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              String title = titleController.text.trim();
+                              await reviewController.addReviewProduct(
+                                  mealID: reviewController.idProduct.toString(),
+                                  rate: reviewController.rating.toInt(),
+                                  title: title);
+                              reviewController.showProductReviews(
+                                reviewController.idProduct.toString(),
+                                // reviewController.rating.toInt(),
+                              );
 
-                          Get.offNamed(ScreenName.allReviewScreen, arguments: {
-                            'mealID': reviewController.idProduct
-                          });
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shadowColor: Colors.white,
-                        side: BorderSide.none,
-                        // primary:,
-                        minimumSize: Size(120.w, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: TextWithFont().textShow(
-                        color: Colors.white,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                        text: 'Save'.tr,
-                      )),
+                              Get.offNamed(ScreenName.allReviewScreen,
+                                  arguments: {
+                                    'mealID': reviewController.idProduct
+                                  });
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.white,
+                            side: BorderSide.none,
+                            // primary:,
+                            minimumSize: Size(120.w, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: TextWithFont().textShow(
+                            color: Colors.white,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                            text: 'Save'.tr,
+                          )),
                 );
               })
             ],

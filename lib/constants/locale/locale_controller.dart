@@ -18,7 +18,7 @@ class MyLocale implements Translations {
           'Finished': 'مكتمل',
           'Unkown User': 'غير معروف',
           'Search': 'البحث',
-          'Write Review': 'كتابة تقييم', 
+          'Write Review': 'كتابة تقييم',
           'Kcal': "سعرة حرارية",
           'Options': 'الخيارات',
           'Price Range': 'نطاق السعر',
@@ -99,7 +99,7 @@ class MyLocale implements Translations {
           'Checkout': 'الدفع',
           'Unknown': 'غير معروف',
           'Write Your Review': 'كتابة تقييمك',
-          'Please enter some text' : 'الرجاء كتابة شيء ما',
+          'Please enter some text': 'الرجاء كتابة شيء ما',
           'Shipping': 'شحن',
           'Total Price': 'السعر الكلي',
           'Add Card': 'اضافة بطاقة',
@@ -121,8 +121,9 @@ class MyLocale implements Translations {
               "أدخل بيانات الموقع الذي تريد توصيل الطلب له",
           "City": "المدينة",
           'Profile': 'الملف الشخصي',
-          'Access as Guest' : 'الدخول كضيف',
-          'You don\'t have any orders right now' : 'ليس لديك طلبات قيد التنفيذ حالياً"',
+          'Access as Guest': 'الدخول كضيف',
+          'You don\'t have any orders right now':
+              'ليس لديك طلبات قيد التنفيذ حالياً"',
           "State": "المنطقه",
           'Delivery Address': 'عنوان التوصيل',
           "Street": "الشارع",
@@ -131,7 +132,7 @@ class MyLocale implements Translations {
           "Address type": "نوع المكان",
           'Eidt Profile': 'تعديل الملف الشخصي',
           "Nearby": "جوار",
-          'Write your review here' : 'الرجاء كتابة التقييم هنا',
+          'Write your review here': 'الرجاء كتابة التقييم هنا',
           'Payment method': 'طريقة الدفع',
           "Address Description": "وصف العنوان",
           "Address on Map": "العنوان علي الخريطة",
@@ -148,6 +149,11 @@ class MyLocale implements Translations {
               'الرجاء كتابة تقييمك على مدى رضاك عن خدمة الشحن / التوصيل',
           'Please enter your email to recieve a link to create a new password via email':
               'يرجى إدخال بريدك الإلكتروني للحصول على رابط لإنشاء كلمة مرور جديدة عبر البريد الإلكتروني',
+          "There are no ratings": "لا توجد تقيمات",
+          "You don't have a request in the cart": "ليس لديك طلب في السلة",
+          "Add Your Location Data": "أضافة بيانات موقعك",
+          "Enter the location data you want to deliver the order to":
+              "أدخل بيانات الموقع الذي تريد توصيل الطلب له",
         },
         // "tr": {
         //   "Log in": '',
@@ -283,16 +289,17 @@ class MyLocale implements Translations {
               'Add your address and pay for current order to start process it',
           'Let\'s get Started': 'Let\'s get Started',
           'Skip': 'Skip',
-          'Please enter some text' : 'Please enter some text',
-          'Write your review here' : 'Write your review here',
+          'Please enter some text': 'Please enter some text',
+          'Write your review here': 'Write your review here',
           'Write Review': 'Write Review',
           'No Data': 'No Data',
           'Offline Failure': 'Offline Failure',
           'Server Failure': 'Server Failure',
-          'Access as Guest' : 'Access as Guest',
+          'Access as Guest': 'Access as Guest',
           'Add Card': 'Add Card',
           'Write Your Review': 'Write Your Review',
-          'You don\'t have any orders right now' : 'You don\'t have any orders right now',
+          'You don\'t have any orders right now':
+              'You don\'t have any orders right now',
           'You must login with account': 'You must login with account',
           'Sub Total details': 'Sub Total details',
           'Order Details': 'Order Details',
@@ -408,6 +415,12 @@ class MyLocale implements Translations {
           'No meals To Category': 'No meals To Category',
           'Please enter your email to recieve a link to create a new password via email':
               'Please enter your email to recieve a link to create a new password via email',
+          "There are no ratings": "There are no ratings",
+          "You don't have a request in the cart":
+              "You don't have a request in the cart",
+          "Add Your Location Data": "Add Your Location Data",
+          "Enter the location data you want to deliver the order to":
+              "Enter the location data you want to deliver the order to",
         },
       };
 }

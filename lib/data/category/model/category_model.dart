@@ -1,8 +1,16 @@
 import 'dart:convert';
+import 'package:hive/hive.dart';
+part 'category_model.g.dart';
 
+@HiveType(typeId: 6)
 class CategoryModel {
+  @HiveField(0)
   String? id;
+
+  @HiveField(1)
   String? name;
+
+  @HiveField(2)
   String? logo;
 
   static String tableName = 'MeelsCatigories';

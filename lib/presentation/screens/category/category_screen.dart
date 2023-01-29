@@ -8,7 +8,7 @@ import 'package:tashil_food_app/data/category/model/category_model.dart';
 
 import 'package:tashil_food_app/routes/screen_name.dart';
 
-import '../widgets/category/appbar_category.dart';
+import '../../widgets/category/appbar_category.dart';
 
 class CategoryScreen extends GetView<RestaurantController> {
   const CategoryScreen({Key? key}) : super(key: key);

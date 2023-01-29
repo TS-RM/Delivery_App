@@ -34,7 +34,7 @@ class BottomNavigationBarMain extends GetView<MainController> {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle: NavBarStyle.style3,
+      navBarStyle: NavBarStyle.style10,
     );
   }
 }

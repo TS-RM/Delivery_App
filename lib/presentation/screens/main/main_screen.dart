@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tashil_food_app/constants/locale/locale.dart';
 import 'package:tashil_food_app/core/logic/controllers/auth/auth_controllers.dart';
@@ -67,7 +64,7 @@ class MainScreen extends StatelessWidget {
                 curve: Curves.ease,
                 duration: Duration(milliseconds: 200),
               ),
-              navBarStyle: NavBarStyle.style3,
+              navBarStyle: NavBarStyle.style10,
             ),
           );
           // : Scaffold(

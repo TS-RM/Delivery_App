@@ -32,7 +32,7 @@ class RatingServices {
     return RatingModel.fromJson(data as Map<String, dynamic>);
   }
 
-  showMealReviews(String mealID) async {
+  Future<List<Map<String, dynamic>>?> showMealReviews(String mealID) async {
     var response = await CrudFirebase().readDataWhereNoEither(
         tableName: rating.tableNme, fieldName1: 'mealID', value1: mealID);
     if (response != null) {

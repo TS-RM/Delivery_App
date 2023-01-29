@@ -6,9 +6,9 @@ import 'package:tashil_food_app/core/logic/controllers/category_page_controller.
 import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
-import '../widgets/meal_in_category/app_bar.dart';
-import '../widgets/meal_in_category/card_meal.dart';
-import '../widgets/meal_in_category/image_res.dart';
+import '../../widgets/meal_in_category/app_bar.dart';
+import '../../widgets/meal_in_category/card_meal.dart';
+import '../../widgets/meal_in_category/image_res.dart';
 
 class RestaurantScreen extends GetView<CategoryPageController> {
   const RestaurantScreen({Key? key}) : super(key: key);

@@ -20,7 +20,7 @@ class MealModelAdapter extends TypeAdapter<MealModel> {
       id: fields[0] as String?,
       name: fields[1] as String?,
       image: fields[3] as String?,
-      rating: fields[4] as double?,
+      rating: fields[4] as num?,
       price: fields[5] as int?,
       calories: fields[6] as int?,
       description: fields[2] as String?,

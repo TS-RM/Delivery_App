@@ -9,11 +9,11 @@ import 'package:tashil_food_app/core/helper/handling_data_view.dart';
 import 'package:tashil_food_app/presentation/widgets/home/category_card.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
-import '../widgets/home/appbar_Item.dart';
-import '../widgets/home/custom_row_home_page.dart';
-import '../widgets/home/meals_view.dart';
-import '../widgets/home/onbording_item.dart';
-import '../widgets/onboarding/onboarding_indicator_home.dart';
+import '../../widgets/home/appbar_Item.dart';
+import '../../widgets/home/custom_row_home_page.dart';
+import '../../widgets/home/meals_view.dart';
+import '../../widgets/home/onbording_item.dart';
+import '../../widgets/onboarding/onboarding_indicator_home.dart';
 
 // TODO  // edit
 

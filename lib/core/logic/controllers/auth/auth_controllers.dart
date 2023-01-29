@@ -5,7 +5,6 @@ import 'package:tashil_food_app/data/auth/service/hive_auth.dart';
 import 'package:tashil_food_app/data/auth/model/user_model.dart';
 import 'package:tashil_food_app/data/firebase/auth_firebase.dart';
 import 'package:tashil_food_app/data/firebase/firestore_auth.dart';
-import 'package:tashil_food_app/data/services/auth_api.dart';
 import 'package:tashil_food_app/presentation/widgets/get_snackbar.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
@@ -97,6 +96,8 @@ class AuthController extends GetxController {
         }
         Get.toNamed(ScreenName.mainScreen);
         stopLording();
+      } else {
+        stopLording();
       }
       // Get.offAll(ControlView());
     } catch (error) {
@@ -176,43 +177,43 @@ class AuthController extends GetxController {
     update();
   }
 
-  Future<void> resetPasswordStep2({
-    required String code,
-  }) async {
-    startLoading();
+  // Future<void> resetPasswordStep2({
+  //   required String code,
+  // }) async {
+  //   startLoading();
 
-    bool result = await AuthApi().resetPasswordStep2(
-      code: code,
-    );
-    if (result == true) {
-      stopLording();
+  //   bool result = await AuthApi().resetPasswordStep2(
+  //     code: code,
+  //   );
+  //   if (result == true) {
+  //     stopLording();
 
-      Get.toNamed(ScreenName.newPwScreen, arguments: [
-        {'code': code},
-      ]);
-    } else {
-      stopLording();
+  //     Get.toNamed(ScreenName.newPwScreen, arguments: [
+  //       {'code': code},
+  //     ]);
+  //   } else {
+  //     stopLording();
 
-      getSnackbar(supTitle: '', title: "Oops! Something went wrong.");
-    }
-  }
+  //     getSnackbar(supTitle: '', title: "Oops! Something went wrong.");
+  //   }
+  // }
 
-  Future<void> resetPasswordStep3({
-    required String code,
-    required String password,
-  }) async {
-    startLoading();
+  // Future<void> resetPasswordStep3({
+  //   required String code,
+  //   required String password,
+  // }) async {
+  //   startLoading();
 
-    bool result =
-        await AuthApi().resetPasswordStep3(code: code, password: password);
-    if (result == true) {
-      stopLording();
+  //   bool result =
+  //       await AuthApi().resetPasswordStep3(code: code, password: password);
+  //   if (result == true) {
+  //     stopLording();
 
-      Get.toNamed(ScreenName.loginScreen);
-    } else {
-      stopLording();
+  //     Get.toNamed(ScreenName.loginScreen);
+  //   } else {
+  //     stopLording();
 
-      getSnackbar(supTitle: '', title: "Oops! Something went wrong.");
-    }
-  }
+  //     getSnackbar(supTitle: '', title: "Oops! Something went wrong.");
+  //   }
+  // }
 }

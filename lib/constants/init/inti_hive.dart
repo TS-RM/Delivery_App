@@ -4,8 +4,10 @@ import 'package:tashil_food_app/data/address/model/address_model.dart';
 import 'package:tashil_food_app/data/auth/model/user_hive_model.dart';
 import 'package:tashil_food_app/data/cart/model/cart_data_model.dart';
 import 'package:tashil_food_app/data/cart/model/cart_model.dart';
+import 'package:tashil_food_app/data/category/model/category_model.dart';
 import 'package:tashil_food_app/data/favorites/model/favorites_hive_model.dart';
 import 'package:tashil_food_app/data/meals/model/meal_model.dart';
+import 'package:tashil_food_app/data/settings/model/settings_model.dart';
 
 class InitHive {
   static Future initBoxHive() async {
@@ -28,5 +30,14 @@ class InitHive {
     Hive.registerAdapter(MealModelAdapter());
     await Hive.openBox<FavoritesHiveModel>('dataFavorites'); // box 4
     await Hive.openBox<MealModel>('dataMeal'); // box 5
+
+    Hive.registerAdapter(CategoryModelAdapter());
+    await Hive.openBox<CategoryModel>('dataCategory'); // box 6
+
+    Hive.registerAdapter(SettingsModelAdapter());
+    await Hive.openBox<SettingsModel>('dataSettings'); // box 7
+
+    await Hive.openBox('darkMode'); // box 8
+    await Hive.openBox('isLang'); // box 9
   }
 }

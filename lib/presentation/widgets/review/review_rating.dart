@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
 import 'package:tashil_food_app/core/logic/controllers/review_rating_meal_controllers.dart';
+import 'package:tashil_food_app/core/logic/controllers/theme_controller.dart';
 
 class ReviewRating extends StatelessWidget {
   final reviewProductController = Get.find<PreviewRatingMealController>();
@@ -11,9 +12,10 @@ class ReviewRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(Get.isDarkMode);
     return Container(
-      height: 60,
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      height: 70.h,
+      padding: EdgeInsets.symmetric(vertical: 10.h),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
@@ -31,10 +33,10 @@ class ReviewRating extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 11, vertical: 10),
                 decoration: BoxDecoration(
-                  color: Get.isDarkMode
+                  color: ThemeController().getThemeDataFromBox()
                       ? reviewProductController.currentSelected.value == index
                           ? mainColor
-                          : Colors.black
+                          : backgroundDarkTheme
                       : reviewProductController.currentSelected.value == index
                           ? mainColor
                           : Colors.white,
@@ -50,7 +52,7 @@ class ReviewRating extends StatelessWidget {
                     Text(
                       reviewProductController.sizeList[index].toString(),
                       style: TextStyle(
-                          color: Get.isDarkMode
+                          color: ThemeController().getThemeDataFromBox()
                               ? reviewProductController.currentSelected.value ==
                                       index
                                   ? Theme.of(context)

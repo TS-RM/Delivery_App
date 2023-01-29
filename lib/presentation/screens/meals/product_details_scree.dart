@@ -12,23 +12,23 @@ import 'package:tashil_food_app/presentation/widgets/get_snackbar.dart';
 import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
-import '../widgets/productDetails/back_icon.dart';
-import '../widgets/productDetails/description.dart';
-import '../widgets/productDetails/description_text.dart';
-import '../widgets/productDetails/image_shadow.dart';
-import '../widgets/productDetails/item_counter.dart';
-import '../widgets/productDetails/rating_bar_rev.dart';
-import '../widgets/productDetails/review_product.dart';
-import '../widgets/productDetails/see_more.dart';
-import '../widgets/productDetails/show_image.dart';
-import '../widgets/productDetails/sub_title.dart';
-import '../widgets/productDetails/title_text.dart';
+import '../../widgets/productDetails/back_icon.dart';
+import '../../widgets/productDetails/description.dart';
+import '../../widgets/productDetails/description_text.dart';
+import '../../widgets/productDetails/image_shadow.dart';
+import '../../widgets/productDetails/item_counter.dart';
+import '../../widgets/productDetails/rating_bar_rev.dart';
+import '../../widgets/productDetails/review_product.dart';
+import '../../widgets/productDetails/see_more.dart';
+import '../../widgets/productDetails/show_image.dart';
+import '../../widgets/productDetails/sub_title.dart';
+import '../../widgets/productDetails/title_text.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({Key? key}) : super(key: key);
 
   final controller = Get.find<MealDetailsController>();
-  final favoriteController = Get.find<FavoritesController>();
+  // final favoriteController = Get.find<FavoritesController>();
   final cartController = Get.find<CartController>();
 
   chick() {
@@ -58,8 +58,8 @@ class ProductDetailsScreen extends StatelessWidget {
         body: Stack(children: [
       RefreshIndicator(
         onRefresh: _refreshLocalGallery,
-        child: Obx(
-          () => controller.isLoading.value
+        child: GetX<MealDetailsController>(
+          builder: (_) => controller.isLoading.value
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
@@ -150,7 +150,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                                           .color!,
                                                       fontSize: 12.sp,
                                                       text:
-                                                          '(${controller.mealsData.value.rating}) ${3} ',
+                                                          '(${controller.mealsData.value.rating}) ${controller.countRatingMeal}',
                                                       fontWeight:
                                                           FontWeight.w500),
                                                   const SizedBox(
@@ -269,61 +269,8 @@ class ProductDetailsScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      SharedPref.instance.getString("token") !=
-                                              null
-                                          ? favoriteController.addFavorites(
-                                              mealModel:
-                                                  controller.mealsData.value,
-                                            )
-                                          : getSnackbar(
-                                              title: "Error".tr,
-                                              supTitle:
-                                                  "You must login with account"
-                                                      .tr,
-                                            );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        right: 20,
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.topRight,
-                                        child: GetBuilder<FavoritesController>(
-                                          builder: (_) => Container(
-                                              width: 60.w,
-                                              height: 60.h,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color:
-                                                    Theme.of(context).cardColor,
-                                              ),
-                                              child: SharedPref.instance
-                                                          .getString("token") !=
-                                                      null
-                                                  ? favoriteController
-                                                          .isFavorites(
-                                                              controller
-                                                                  .mealsData
-                                                                  .value
-                                                                  .id!)
-                                                      ? Icon(
-                                                          Icons.favorite,
-                                                          color: mainColor,
-                                                        )
-                                                      : Icon(
-                                                          Icons.favorite_border,
-                                                          color: mainColor,
-                                                        )
-                                                  : Icon(
-                                                      Icons.favorite_border,
-                                                      color: mainColor,
-                                                    )),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  addToFavorites(
+                                      context, controller.category.toString()),
                                 ],
                               ),
                             ),
@@ -336,5 +283,50 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
       )
     ]));
+  }
+
+  Widget addToFavorites(BuildContext context, String cat) {
+    final dataUser = HiveAuth().getDataUser();
+    return GetBuilder<FavoritesController>(
+      init: FavoritesController(),
+      builder: (favoriteController) => GestureDetector(
+        onTap: () {
+          dataUser != null
+              ? favoriteController.isLoading
+                  ? null
+                  : favoriteController.addFavorites(
+                      mealModel: controller.mealsData.value,
+                      idUser: dataUser.id.toString(),
+                      cat: cat,
+                    )
+              : getSnackbar(
+                  title: "Error".tr,
+                  supTitle: "You must login with account".tr,
+                );
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(
+            right: 20,
+          ),
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              width: 60.w,
+              height: 60.h,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Theme.of(context).cardColor,
+              ),
+              child: SharedPref.instance.getString("token") != null
+                  ? favoriteController
+                          .isFavorites(controller.mealsData.value.id!)
+                      ? Icon(Icons.favorite, color: mainColor)
+                      : Icon(Icons.favorite_border, color: mainColor)
+                  : Icon(Icons.favorite_border, color: mainColor),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -23,7 +23,7 @@ class ListTileCard extends StatelessWidget {
           isProduct ? '${dataMeals.name}' : '${dataMeals.name}',
           style: TextStyle(
               //                    fontSize: 15,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w500,
               color: Theme.of(context).textTheme.headlineLarge!.color),
         ),
         leading: CircleAvatar(

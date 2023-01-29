@@ -7,8 +7,8 @@ import 'package:tashil_food_app/constants/theme/theme_data.dart';
 import 'package:tashil_food_app/core/logic/controllers/favorites_conntroller.dart';
 import 'package:tashil_food_app/presentation/widgets/auth/check_session_user.dart';
 
-import '../widgets/favorite/app_bar_favorites.dart';
-import '../widgets/favorite/item_list_view.dart';
+import '../../widgets/favorite/app_bar_favorites.dart';
+import '../../widgets/favorite/item_list_view.dart';
 
 class FavoritesScreen extends GetView<FavoritesController> {
   const FavoritesScreen({Key? key}) : super(key: key);

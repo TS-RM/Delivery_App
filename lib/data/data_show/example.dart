@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/path_const/image_asset.dart';
-import 'package:tashil_food_app/data/model/onboardingmodel.dart';
+import 'package:tashil_food_app/data/onboardingmodel.dart';
 
 List<OnBoardingModel> onBoardingList = [
   OnBoardingModel(

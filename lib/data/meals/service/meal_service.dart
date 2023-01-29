@@ -21,4 +21,12 @@ class MealService {
         await CrudFirebase().readDataLimit(tableName: 'Meals', limit: limit);
     return response.fold((l) => l, (r) => r);
   }
+
+  void updateMealRating(String mealID, num rating) {
+    CrudFirebase().upDateData(
+      tableName: 'Meals',
+      id: mealID,
+      data: {'rating': rating},
+    );
+  }
 }

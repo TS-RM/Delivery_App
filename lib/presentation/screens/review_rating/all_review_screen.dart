@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tashil_food_app/constants/enums/status_request.dart';
-import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
 import 'package:tashil_food_app/core/logic/controllers/review_rating_meal_controllers.dart';
-import 'package:tashil_food_app/core/helper/handling_data_view.dart';
 import 'package:tashil_food_app/data/auth/service/hive_auth.dart';
-import 'package:tashil_food_app/presentation/widgets/get_snackbar.dart';
 import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
@@ -58,7 +54,7 @@ class AllReviewScreen extends StatelessWidget {
                                   )
                                 : Center(
                                     child: Text(
-                                      reviewController.notDataRating.toString(),
+                                      'There are no ratings'.tr,
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .textTheme

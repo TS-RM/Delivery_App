@@ -22,11 +22,10 @@ class SendOTPScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: TextWithFont().textShow(
-            text: 'OTP',
-            color: Theme.of(context).textTheme.headlineLarge!.color,
-            fontWeight: FontWeight.bold,
-            fontSize: 20.sp
-          ),
+              text: 'OTP',
+              color: Theme.of(context).textTheme.headlineLarge!.color,
+              fontWeight: FontWeight.bold,
+              fontSize: 20.sp),
           elevation: 0,
         ),
         body: SafeArea(
@@ -89,7 +88,7 @@ class SendOTPScreen extends StatelessWidget {
                           press: () {
                             if (formKey.currentState!.validate()) {
                               String codeRes = code.text.trim();
-                              controller.resetPasswordStep2(code: codeRes);
+                              // controller.resetPasswordStep2(code: codeRes);
                             }
                             // Get.toNamed(Routes.newPwScreen);
                           });

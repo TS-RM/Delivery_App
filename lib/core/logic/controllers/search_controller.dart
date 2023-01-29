@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/enums/loading_state.dart';
 import 'package:tashil_food_app/constants/enums/loading_types.dart';
 import 'package:tashil_food_app/data/meals/model/meal_model.dart';
-import 'package:tashil_food_app/data/services/search_services.dart';
+import 'package:tashil_food_app/data/search_services.dart';
 
 class SearchController extends GetxController {
   // var searchRestaurantList = <DataRestaurant>[].obs;

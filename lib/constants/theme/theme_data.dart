@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tashil_food_app/constants/theme/fonts/font_app.dart';
 
+const Color backgroundDarkTheme = Color(0xFF18172B);
 Color mainColor = const Color(0xFFc1541b);
 const Color onBoardingDocsColor = Color.fromRGBO(144, 152, 177, 1);
 const Color onBoardingIndicatorColor = Color.fromRGBO(229, 229, 229, 1);
@@ -66,16 +67,16 @@ class ThemesApp {
             color: Color.fromRGBO(144, 152, 177, 1),
           ),
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark,
-            statusBarBrightness: Brightness.light,
             systemNavigationBarColor: Colors.white,
-            statusBarColor: Colors.white.withOpacity(.8),
+            systemNavigationBarIconBrightness: Brightness.dark,
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
-          iconTheme: const IconThemeData(color: Colors.black45),
+          iconTheme: IconThemeData(color: Colors.black45),
           centerTitle: true,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -89,7 +90,7 @@ class ThemesApp {
 
   static ThemeData darkTheme() => ThemeData(
         fontFamily: AppFonts.elMessiri,
-        scaffoldBackgroundColor: const Color(0xFF18172B),
+        scaffoldBackgroundColor: backgroundDarkTheme,
         primaryColor: darkGreyClr,
         secondaryHeaderColor: const Color(0xFF27273c),
         textTheme: TextTheme(
@@ -103,7 +104,7 @@ class ThemesApp {
           //   color: Color(0xFF18172B).withOpacity(.8),
           // ),
           displaySmall: TextStyle(
-            color: const Color(0xFF18172B).withOpacity(.8),
+            color: backgroundDarkTheme.withOpacity(.8),
           ),
           // headline3: TextStyle(
           //   color: Colors.black,
@@ -126,19 +127,18 @@ class ThemesApp {
             color: Color.fromRGBO(144, 152, 177, 1),
           ),
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: backgroundDarkTheme,
             statusBarIconBrightness: Brightness.light,
-            // statusBarBrightness: Brightness.,
-
-            systemNavigationBarColor: const Color(0xFF1F1F30),
-            statusBarColor: const Color(0xFF18172B).withOpacity(.8),
+            systemNavigationBarColor: backgroundDarkTheme,
+            systemNavigationBarIconBrightness: Brightness.light,
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
-          toolbarTextStyle: const TextStyle(color: Colors.white),
+          toolbarTextStyle: TextStyle(color: Colors.white),
           centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.white),
+          iconTheme: IconThemeData(color: Colors.white),
         ),
         cardColor: const Color(0xFF27273c),
         elevatedButtonTheme: ElevatedButtonThemeData(

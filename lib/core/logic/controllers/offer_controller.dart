@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/enums/loading_state.dart';
 import 'package:tashil_food_app/constants/enums/loading_types.dart';
-import 'package:tashil_food_app/core/helper/handing_data_controller.dart';
 import 'package:tashil_food_app/constants/enums/status_request.dart';
 import 'package:tashil_food_app/data/offer/model/model_offer.dart';
-import 'package:tashil_food_app/data/services/offer_servces.dart';
 
 class OfferController extends GetxController {
   // var offerList = <DataOffer>[].obs;
@@ -29,7 +27,7 @@ class OfferController extends GetxController {
       try {
         await Future.delayed(Duration(seconds: 5));
 
-        var listOfData = await OfferServces().showAllOffer(++_pageNo);
+        var listOfData = []; // await OfferServces().showAllOffer(++_pageNo);
 
         if (offerList.isEmpty) {
           loadingState.value = LoadingState(
@@ -39,11 +37,11 @@ class OfferController extends GetxController {
           // final dataList = (listOfData['data']['data'] as List)
           //     .map((e) => DataOffer.fromJson(e))
           //     .toList();
-          final dataList = (listOfData['data']['data'] as List)
-              .map((e) => OfferModel.fromJson(e))
-              .toList();
+          // final dataList = (listOfData['data']['data'] as List)
+          //     .map((e) => OfferModel.fromJson(e))
+          //     .toList();
 
-          offerList.addAll(dataList);
+          // offerList.addAll(dataList);
           loadingState.value = LoadingState(loadingType: LoadingType.loaded);
         }
       } catch (err) {
@@ -56,25 +54,25 @@ class OfferController extends GetxController {
   showAllOffer() async {
     statusOffer = StatusRequest.loading;
 
-    var response = await OfferServces().showAllOffer(
-      _pageNo,
-    );
-    statusOffer = handlingData(response);
+    // var response = await OfferServces().showAllOffer(
+    // _pageNo,
+    // );
+    // statusOffer = handlingData(response);
 
     if (StatusRequest.success == statusOffer) {
-      if (response['status'] == 200) {
-        // final dataList = (response['data']['data'] as List)
-        //     .map((e) => DataOffer.fromJson(e))
-        //     .toList();
-        // offerList.addAll(dataList);
+      // if (response['status'] == 200) {
+      // final dataList = (response['data']['data'] as List)
+      //     .map((e) => DataOffer.fromJson(e))
+      //     .toList();
+      // offerList.addAll(dataList);
 
-        final dataList = (response['data']['data'] as List)
-            .map((e) => OfferModel.fromJson(e))
-            .toList();
-        offerList.addAll(dataList);
-      } else {
-        statusOffer = StatusRequest.failure;
-      }
+      // final dataList = (response['data']['data'] as List)
+      //     .map((e) => OfferModel.fromJson(e))
+      //     .toList();
+      // offerList.addAll(dataList);
+      // } else {
+      //   statusOffer = StatusRequest.failure;
+      // }
     }
     update();
   }

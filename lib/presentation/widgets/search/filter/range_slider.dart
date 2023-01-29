@@ -27,13 +27,13 @@ class RangeSliderFlitter extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      '\$ ${mealsController.startLabel.value}',
+                      '\$ ${mealsController.startLabel}',
                       style:
                           TextStyle(color: Colors.grey.shade500, fontSize: 12),
                     ),
                     Text(" - ", style: TextStyle(color: Colors.grey.shade500)),
                     Text(
-                      '\$ ${mealsController.endLabel.value}',
+                      '\$ ${mealsController.endLabel}',
                       style:
                           TextStyle(color: Colors.grey.shade500, fontSize: 12),
                     ),
@@ -47,13 +47,13 @@ class RangeSliderFlitter extends StatelessWidget {
         Obx(() => RangeSlider(
             values: mealsController.values.value,
             min: 0.00,
-            max: 100.00,
+            max: 500.00,
             divisions: 10,
             inactiveColor: Colors.grey.shade300,
             activeColor: mainColor,
             labels: RangeLabels(
-              '\$ ${mealsController.startLabel.value}',
-              '\$ ${mealsController.endLabel.value}',
+              '\$ ${mealsController.startLabel}',
+              '\$ ${mealsController.endLabel}',
             ),
             onChanged: (RangeValues values) {
               mealsController.values.value = values;

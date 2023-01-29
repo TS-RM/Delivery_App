@@ -99,7 +99,7 @@ class FoodsView extends StatelessWidget {
                           textBaseline: TextBaseline.alphabetic,
                           children: [
                             RatingBarIndicator(
-                              rating: homeProductData.rating!,
+                              rating: homeProductData.rating!.toDouble(),
                               itemCount: 1,
                               itemSize: 16.0,
                               physics: const BouncingScrollPhysics(),

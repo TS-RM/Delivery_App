@@ -4,11 +4,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
 import 'package:tashil_food_app/data/meals/model/meal_model.dart';
-import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 
 class MealCard extends StatelessWidget {
-  const MealCard({Key? key, required this.homeProductData}) : super(key: key);
-  final MealModel homeProductData;
+  const MealCard({Key? key, required this.mealModel}) : super(key: key);
+  final MealModel mealModel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +32,7 @@ class MealCard extends StatelessWidget {
                 color: Colors.grey.shade300,
                 image: DecorationImage(
                   image: CachedNetworkImageProvider(
-                    homeProductData.image!,
+                    mealModel.image.toString(),
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -48,7 +47,7 @@ class MealCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  homeProductData.name!,
+                  mealModel.name.toString(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -62,7 +61,7 @@ class MealCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      '\$ ${homeProductData.price}',
+                      '\$ ${mealModel.price}',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: Theme.of(context).textTheme.headlineLarge!.color,
@@ -76,7 +75,7 @@ class MealCard extends StatelessWidget {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         RatingBarIndicator(
-                          rating: homeProductData.rating!,
+                          rating: mealModel.rating!.toDouble(),
                           itemCount: 1,
                           itemSize: 16.0,
                           physics: const BouncingScrollPhysics(),
@@ -89,7 +88,7 @@ class MealCard extends StatelessWidget {
                           width: 3,
                         ),
                         Text(
-                          '${homeProductData.rating}',
+                          '${mealModel.rating}',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Theme.of(context)
@@ -111,10 +110,10 @@ class MealCard extends StatelessWidget {
                       width: 150.w,
                       height: 45.h,
                       child: // TextWithFont().textShow(
-                        Text(
-                          homeProductData.description!,
-                          maxLines: 2,
-                          style: TextStyle(
+                          Text(
+                        mealModel.description.toString(),
+                        maxLines: 2,
+                        style: TextStyle(
                           overflow: TextOverflow.ellipsis,
                           color: Theme.of(context)
                               .textTheme
@@ -124,7 +123,7 @@ class MealCard extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           fontSize: 13.sp,
                         ),
-                        ),
+                      ),
                     )
                   ],
                 ),

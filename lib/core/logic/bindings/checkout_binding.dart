@@ -6,7 +6,7 @@ class CheckoutBindings extends Bindings {
   void dependencies() {
     Get.put(
       CheckoutController(),
-      permanent: true,
+      // permanent: true,
     ); // permanent: true
   }
 }

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tashil_food_app/data/services/check_internet.dart';
+import 'package:tashil_food_app/core/helper/check_internet.dart';
 import 'package:tashil_food_app/constants/enums/status_request.dart';
 
 class CrudFirebase {
@@ -413,6 +413,36 @@ class CrudFirebase {
     // }
 
     return totalCount;
+  }
+
+  Future<List<Map<String, dynamic>>?> getFilterMeals({
+    required String tableName,
+    required String fieldName,
+    required String fieldName1,
+    required String value,
+    required num greaterValue,
+    required num smallerValue,
+  }) async {
+    try {
+      List<Map<String, dynamic>> data = [];
+      final listDocs = await FirebaseFirestore.instance
+          .collection(tableName)
+          .where(fieldName, isEqualTo: value)
+          .where(fieldName1,
+              isGreaterThanOrEqualTo: smallerValue,
+              isLessThanOrEqualTo: greaterValue)
+          .get();
+      data = listDocs.docs.map((e) => e.data()).toList().cast();
+      if (data.isNotEmpty) {
+        return data;
+      } else {
+        return null;
+      }
+    } on FirebaseException catch (e) {
+      debugPrint(e.code);
+      debugPrint(e.message);
+      return null;
+    }
   }
 
   Future<Either<StatusRequest, List<Map<String, dynamic>>>>

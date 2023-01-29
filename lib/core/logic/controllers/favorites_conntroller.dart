@@ -1,11 +1,15 @@
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/static_data/shared_preference.dart';
+import 'package:tashil_food_app/data/auth/model/user_hive_model.dart';
+import 'package:tashil_food_app/data/auth/service/hive_auth.dart';
 import 'package:tashil_food_app/data/category/model/category_model.dart';
+import 'package:tashil_food_app/data/category/service/category_hive_service.dart';
 import 'package:tashil_food_app/data/favorites/model/favorites_hive_model.dart';
 import 'package:tashil_food_app/data/favorites/model/favorites_model.dart';
 import 'package:tashil_food_app/data/favorites/service/favorites_service.dart';
 import 'package:tashil_food_app/data/favorites/service/favorites_service_hive.dart';
 import 'package:tashil_food_app/data/meals/model/meal_model.dart';
+import 'package:tashil_food_app/data/meals/model/meal_model_h.dart';
 import 'package:tashil_food_app/data/meals/service/meal_service.dart';
 
 class FavoritesController extends GetxController {
@@ -64,59 +68,75 @@ class FavoritesController extends GetxController {
 
   Future<MealModel?> getMealInFavorites(String id) async {
     final data = await MealService().getMealWhereID(idMeal: id);
-    final dataAddCategory = getCategory(data);
-    if (dataAddCategory != null) {
-      return dataAddCategory;
+    // final dataAddCategory = getCategoryFe(data);
+    // data.category = dataAddCategory;
+    if (data != null) {
+      return data;
     } else {
       return null;
     }
   }
 
-  MealModel? getCategory(MealModel mealModel) {
-    final data = storage.getString('homeCategoryList');
-    final encodedData = CategoryModel.decode(data.toString());
-    final index =
-        encodedData.indexWhere((element) => element.id == mealModel.category);
-    if (index >= 0) {
-      mealModel.category = encodedData[index].name.toString();
-      return mealModel;
-    } else {
-      return null;
-    }
-  }
+  // String? getCategoryFe(MealModel mealModel) {
+  //   final CategoryHiveService categoryLocal = CategoryHiveService();
+  //   final CategoryModel? categoryData =
+  //       categoryLocal.getCategoryData(mealModel.id.toString());
+  //   if (categoryData != null) {
+  //     // final int index = categoryData
+  //     //     .indexWhere((element) => element.id == mealModel.category);
+  //     return categoryData.name.toString();
+  //     // print(index);
+  //     // if (index >= 0) {
+  //     // } else {
+  //     //   return null;
+  //     // }
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   addFavorites({
     required MealModel mealModel,
+    required String idUser,
+    required String cat,
   }) async {
-    String id = storage.getString('id') ?? '';
-    if (id != '') {
-      final dataReturn = FavoritesHiveService().getAll();
-      if (dataReturn != null) {
-        var index = dataReturn
-            .indexWhere((element) => element.mealModel!.id == mealModel.id);
-        if (index >= 0) {
-          final favoriteData = dataReturn[index];
-          deleteFavorites(favoriteData.id.toString());
-        } else {
-          FavoritesModel favoritesModel = FavoritesModel()
-            ..mealID = mealModel.id
-            ..userID = id;
-          final data = await FavoritesService()
-              .addToFavorites(favoritesModel: favoritesModel);
-          final dataAddCategory = getCategory(mealModel);
-          if (data != null && dataAddCategory != null) {
-            FavoritesHiveModel favoritesHiveModel = FavoritesHiveModel()
-              ..id = data.id
-              ..mealModel =
-                  data.mealID == dataAddCategory.id ? dataAddCategory : null
-              ..userID = data.userID;
-            FavoritesHiveService()
-                .addFavoritesData(favoritesHiveModel: favoritesHiveModel);
-          }
+    startLoading();
+    final dataReturn = FavoritesHiveService().getAll();
+    if (dataReturn != null) {
+      var index = dataReturn
+          .indexWhere((element) => element.mealModel!.id == mealModel.id);
+      if (index >= 0) {
+        print('حذف من المفظلة');
+        final favoriteData = dataReturn[index];
+        dataReturn.removeAt(index);
+        deleteFavorites(favoriteData.id.toString());
+        stopLoading();
+      } else {
+        print('اضافة من المفظلة');
+        FavoritesModel favoritesModel = FavoritesModel()
+          ..mealID = mealModel.id
+          ..userID = idUser;
+        final data = await FavoritesService()
+            .addToFavorites(favoritesModel: favoritesModel);
+        // final dataAddCategory = getCategoryFe(mealModel);
+        // print(data);
+
+        if (data != null) {
+          print('امر أضافة في الهايف من المفظلة');
+          // MealModel m
+          FavoritesHiveModel favoritesHiveModel = FavoritesHiveModel()
+            ..id = data.id
+            ..mealModel = mealModel
+            // data.mealID.toString()
+            // == dataAddCategory.id ? dataAddCategory : null
+            ..userID = data.userID;
+          FavoritesHiveService()
+              .addFavoritesData(favoritesHiveModel: favoritesHiveModel);
+          stopLoading();
         }
       }
-      update();
     }
+    update();
   }
 
   void mangeFavorites(

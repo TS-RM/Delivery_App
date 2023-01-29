@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tashil_food_app/constants/theme/theme_data.dart';
+import 'package:tashil_food_app/data/settings/service/settings_service.dart';
 import 'package:tashil_food_app/presentation/widgets/text_with_font.dart';
 import 'package:tashil_food_app/routes/screen_name.dart';
 
@@ -19,6 +20,7 @@ class OnBoardingColumn extends StatelessWidget {
         AuthButton(
           press: () {
             Get.toNamed(ScreenName.mainScreen);
+            SettingsService().addSplashData();
           },
           text: 'Get Start'.tr,
         ),
